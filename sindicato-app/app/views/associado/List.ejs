@@ -88,7 +88,7 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Listagem de Alunos</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Listagem de Associados</h1>
 
                     <%- messages() %>
 
@@ -125,6 +125,7 @@
                                         <tr>
                                             <th>CPF</th>
                                             <th>Nome</th>
+                                            <th>Telefone</th>
                                             <th>Ação</th>
                                         </tr>
                                     </thead>
@@ -132,14 +133,16 @@
                                         <tr>
                                             <th>CPF</th>
                                             <th>Nome</th>
+                                            <th>Telefone</th>
                                             <th>Ação</th>
                                         </tr>
                                     </tfoot>
                                     <tbody id="table_body">
                                         <% for (var i = 0; i < itens.length; i++) { %>
-                                        <tr>
+                                        <tr>                                            
                                             <td><%= itens[i].cpf %></td>
                                             <td><%= itens[i].nome %></td>
+                                            <td><%= itens[i].contato %></td>
                                             <td>
                                                 <a href="/app/<%= page %>/edit/<%= itens[i].id %>"
                                                     class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip"

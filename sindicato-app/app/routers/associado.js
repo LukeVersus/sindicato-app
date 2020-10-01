@@ -6,6 +6,7 @@ const rota = require('path').basename(__filename, '.js');
 var multer = require('multer');
 var upload = multer();
 let lista = [];
+let listaDois = [];
 let estados = [];
 let setores = [];
 var moment = require('moment');
@@ -39,18 +40,31 @@ module.exports = async function (app) {
                 },
             }, function (error, response, body) {
                 lista = [];
+                listaDois = [];
                 for (var i = 0; i < Object.keys(body.data.content).length; i++) {
-                    const finallista = {
-                        id: body.data.content[i].id,
-                        nome: body.data.content[i].nome,
-                        cpf: body.data.content[i].cpf,
-                        status: body.data.content[i].status
-                    };
-                    lista.push(finallista);
+                    if(body.data.content[i].validacao == true) {
+                        const finallista = {
+                            id: body.data.content[i].id,
+                            nome: body.data.content[i].nome,
+                            cpf: body.data.content[i].cpf,
+                            status: body.data.content[i].status,
+                            contato: body.data.content[i].endereco.tel_cel,
+                        };
+                        lista.push(finallista);
+                    } else {
+                        const finallista = {
+                            id: body.data.content[i].id,
+                            nome: body.data.content[i].nome,
+                            cpf: body.data.content[i].cpf,
+                            status: body.data.content[i].status,
+                            contato: body.data.content[i].endereco.tel_cel,
+                        };
+                        listaDois.push(finallista);
+                    }
                 }
                 res.format({
                     html: function () {
-                        res.render(rota + '/List', { itens: lista, page: rota, informacoes: req.session.json, number: body.data.number, totalPages: body.data.totalPages, });
+                        res.render(rota + '/List', { itens: lista, itensDois: listaDois, page: rota, informacoes: req.session.json, number: body.data.number, totalPages: body.data.totalPages, });
                     }
                 });
                 return lista;
@@ -181,7 +195,8 @@ module.exports = async function (app) {
                 "situacao": req.body.situacao,
                 "datanascimento": datanasc,
                 "tpEscolaridade": req.body.tpEscolaridade,
-                "faixaSalario": req.body.faixaSalario
+                "faixaSalario": req.body.faixaSalario,
+                "validacao": false
             },
 
         }, function (error, response, body) {

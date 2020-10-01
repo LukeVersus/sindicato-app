@@ -29,61 +29,54 @@ module.exports = async function (app) {
         res.locals.messages = require('express-messages')(req, res);
         next();
     });
-
     // Rota para exibição da View Listar
     app.get('/app/' + rota + '/list', function (req, res) {
-
         if (!req.session.token) {
             res.redirect('/app/login');
-        } else if (req.session.usuario.niveis[0] != 'ADMIN') {
-            res.redirect('/');
         } else {
-            teste = request({
-                url: process.env.API_HOST + rota + "/nome/nivel/0/10",
-                method: "GET",
-                json: true,
-                headers: {
-                    "content-type": "application/json",
-                    "Authorization": req.session.token
-                },
-            }, function (error, response, body) {
-                lista = [];
+            if (!req.session.token) {
+                res.redirect('/app/login');
+            } else if (NivelUser != 'ADMIN') {
+                res.redirect('/');
+            } else {
+                request({
+                    url: process.env.API_HOST + rota + "/0/10?sort=nome!asc",
+                    method: "GET",
+                    json: true,
+                    headers: {
+                        "content-type": "application/json",
+                        "Authorization": req.session.token
+                    },
+                }, function (error, response, body) {
+                    lista = [];
+                    for (var i = 0; i < Object.keys(body.data.content).length; i++) {
+                        const finallista = {
+                            id: body.data.content[i].id,
+                            nome: body.data.content[i].nome,
+                            username: body.data.content[i].username,
+                            niveis: body.data.content[i].niveis,
+                            ativo: body.data.content[i].ativo,
+                            bloqueado: body.data.content[i].bloqueado,
+                            expirado: body.data.content[i].expirado,
+                            habilitado: body.data.content[i].habilitado,
+                            telefone: body.data.content[i].telefone,
+                            email: body.data.content[i].email
 
-                for (var i = 0; i < Object.keys(body.data.content).length; i++) {
-                    if (body.data.content[i].contato1 == null || body.data.content[i].contato1 == '') {
-                        body.data.content[i].contato1 = body.data.content[i].contato2
-                    }
-                    const finallista = {
-                        id: body.data.content[i].id,
-                        nome: body.data.content[i].nome,
-                        username: body.data.content[i].username,
-                        niveis: body.data.content[i].niveis,
-                        ativo: body.data.content[i].ativo,
-                        telefone: body.data.content[i].telefone,
-                        email: body.data.content[i].email
-
-                    };
-                    lista.push(finallista);
-                }
-                res.format({
-                    html: function () {
-                        res.render(rota + '/List', {
-                            itens: lista,
-                            page: rota,
-                            informacoes: req.session.json,
-                            number: body.data.number,
-                            totalPages: body.data.totalPages
-                        });
+                        };
+                        lista.push(finallista);
 
                     }
+                    res.format({
+                        html: function () {
+                            res.render(rota + '/List', { itens: lista, page: rota, informacoes: req.session.json, number: body.data.number, totalPages: body.data.totalPages });
+                        }
+                    });
+                    return lista;
                 });
-                return lista;
-            });
-
+            }
         }
     });
 
-    // Rota para exibição da View Criar
     app.get('/app/' + rota + '/create', function (req, res) {
         if (!req.session.token) {
             res.redirect('/app/login');
@@ -119,13 +112,12 @@ module.exports = async function (app) {
                 "nome": req.body.nome,
                 "username": req.body.username,
                 "password": req.body.password,
-                "niveis": ["ADMIN"],
+                "niveis": [req.body.niveis],
                 "ativo": req.body.ativo,
                 "habilitado": true,
                 "expirado": false,
                 "bloqueado": false,
-                "contato1": req.body.contato1,
-                "contato2": req.body.contato2,
+                "telefone": req.body.telefone,                
                 "email": req.body.email
             },
         }, function (error, response, body) {
@@ -141,6 +133,8 @@ module.exports = async function (app) {
         });
 
     });
+
+
 
     // Rota para exibição da View Editar
     app.get('/app/' + rota + '/edit/:id', function (req, res) {
@@ -167,14 +161,13 @@ module.exports = async function (app) {
                             password: body.data.password,
                             page: rota,
                             ativo: body.data.ativo,
-                            contato1: body.data.contato1,
-                            contato2: body.data.contato2,
+                            telefone: body.data.telefone,
                             email: body.data.email,
                             informacoes: req.session.json
                         });
                     }
                 });
-                nivel = body.data.niveis;
+                nivel = NivelUser
                 username = body.data.username;
                 imagem = body.data.imgCapa;
             });
@@ -204,9 +197,8 @@ module.exports = async function (app) {
                 "id": req.body.id,
                 "nome": req.body.nome,
                 "username": username,
-                "niveis": nivel,
-                "contato1": req.body.contato1,
-                "contato2": req.body.contato2,
+                "niveis": NivelUser,
+                "telefone": req.body.telefone,
                 "email": req.body.email,
                 "ativo": req.body.ativo,
             },
@@ -281,8 +273,7 @@ module.exports = async function (app) {
                             habilitado: body.data.habilitado,
                             expirado: body.data.expirado,
                             bloqueado: body.data.bloqueado,
-                            contato1: body.data.contato1,
-                            contato2: body.data.contato2,
+                            telefone: body.data.telefone,
                             email: body.data.email,
                             informacoes: req.session.json
                         });
@@ -311,9 +302,8 @@ module.exports = async function (app) {
                 "id": req.body.id,
                 "nome": req.body.nome,
                 "username": username,
-                "niveis": nivel,
-                "contato1": req.body.contato1,
-                "contato2": req.body.contato2,
+                "niveis": NivelUser,
+                "telefone": req.body.telefone,
                 "email": req.body.email,
                 /*
                 "ativo": req.body.ativo,
@@ -354,21 +344,18 @@ module.exports = async function (app) {
             }, function (error, response, body) {
                 lista = [];
                 for (var i = 0; i < Object.keys(body.data.content).length; i++) {
-                    if (body.data.content[i].contato1 == null || body.data.content[i].contato1 == '') {
-                        body.data.content[i].contato1 = body.data.content[i].contato2
-                    }
-                        const finallista = {
-                            id: body.data.content[i].id,
-                            nome: body.data.content[i].nome,
-                            username: body.data.content[i].username,
-                            niveis: body.data.content[i].niveis,
-                            ativo: body.data.content[i].ativo,
-                            contato1: body.data.content[i].contato1, //telefone
-                            contato2: body.data.content[i].contato2, //celular
-                            email: body.data.content[i].email
 
-                        };
-                        lista.push(finallista);
+                    const finallista = {
+                        id: body.data.content[i].id,
+                        nome: body.data.content[i].nome,
+                        username: body.data.content[i].username,
+                        niveis: body.data.content[i].niveis,
+                        ativo: body.data.content[i].ativo,
+                        telefone: body.data.content[i].telefone, //telefone
+                        email: body.data.content[i].email
+
+                    };
+                    lista.push(finallista);
                 }
 
                 return res.json({

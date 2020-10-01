@@ -44,7 +44,7 @@ module.exports = async function (app) {
                         id: body.data.content[i].id,
                         nome: body.data.content[i].nome,
                         cpf: body.data.content[i].cpf,
-                        contato: body.data.content[i].endereco.tel_cel
+                        status: body.data.content[i].status
                     };
 
                     if(body.data.content[i].status != 'PRE_CADASTRADO'){
@@ -86,7 +86,6 @@ module.exports = async function (app) {
                         id: body.data.content[i].id,
                         nome: body.data.content[i].nome,
                         cpf: body.data.content[i].cpf,
-                        contato: body.data.content[i].endereco.tel_cel
                     };
                     lista.push(finallista);
                 }
@@ -125,7 +124,7 @@ module.exports = async function (app) {
                         id: body.data.content[i].id,
                         nome: body.data.content[i].nome,
                         cpf: body.data.content[i].cpf,
-                        contato: body.data.content[i].endereco.tel_cel
+                        status: body.data.content[i].status
                     };
                     if(body.data.content[i].status == 'PRE_CADASTRADO'){
                         lista.push(finallista);
@@ -195,7 +194,8 @@ module.exports = async function (app) {
             json: {
                 "nome_escola": req.body.nome_escola,
                 "nome": req.body.nome,
-                "orgao_expedidor": req.body.orgao_expedidor,               
+                "orgao_expedidor": req.body.orgao_expedidor,
+                "nivel": req.body.nivel,
                 "atividade_funcional": req.body.atividade_funcional,
                 "matricula": req.body.matricula,
                 "rg": req.body.rg,
@@ -231,9 +231,14 @@ module.exports = async function (app) {
                 res.redirect('/');
             } else {
                 req.flash("success", "Associado cadastrado.");
-                res.redirect('/app/' + rota + '/Pre-cadastro');
-            }
-            return true;
+                if(req.body.status == 'PRE_CADASTRADO'){
+                    res.redirect('/app/' + rota + '/pre-cadastro');
+                    return true;
+                }else{
+                    res.redirect('/app/' + rota + '/list');
+                    return true;
+                } 
+            }            
         });
     });
 
@@ -278,11 +283,13 @@ module.exports = async function (app) {
                                 id: body.data.id,
                                 nome_escola: body.data.nome_escola,
                                 nome: body.data.nome,
-                                orgao_expedidor: body.data.orgao_expedidor,                                
+                                orgao_expedidor: body.data.orgao_expedidor,
+                                nivel: body.data.nivel,
                                 atividade_funcional: body.data.atividade_funcional,
                                 area: body.data.area,
                                 matricula: body.data.matricula,
                                 status: body.data.status,
+                                turno: body.data.turno,
                                 rg: body.data.rg,
                                 cpf: body.data.cpf,
                                 sexo: body.data.sexo,
@@ -313,7 +320,6 @@ module.exports = async function (app) {
                                 disciplina: body.data.disciplina,
                                 tpEstadoCivil: body.data.tpEstadoCivil,
                                 tpRedeEnsino: body.data.tpRedeEnsino,
-                                turno: body.data.turno,
                                 situacao: body.data.situacao,
                                 datanascimento: moment(body.data.datanascimento).format("YYYY-MM-DD"),
                                 tpEscolaridade: body.data.tpEscolaridade,
@@ -354,7 +360,8 @@ module.exports = async function (app) {
                 "nome_escola": req.body.nome_escola,
                 "nome": req.body.nome,
                 "id": req.body.id,
-                "orgao_expedidor": req.body.orgao_expedidor,                
+                "orgao_expedidor": req.body.orgao_expedidor,
+                "nivel": req.body.nivel,
                 "atividade_funcional": req.body.atividade_funcional,
                 "area": req.body.area,
                 "matricula": req.body.matricula,
@@ -377,7 +384,9 @@ module.exports = async function (app) {
                 "disciplina": req.body.disciplina,
                 "tpEstadoCivil": req.body.tpEstadoCivil,
                 "tpRedeEnsino": req.body.tpRedeEnsino,
-                "situacao": req.body.situacao, 
+                "situacao": req.body.situacao,
+                "status": req.body.status,
+                "validacao": validacao,
                 "datanascimento": datanasc,
                 "tpEscolaridade": req.body.tpEscolaridade,
                 "faixaSalario": req.body.faixaSalario,
@@ -391,9 +400,14 @@ module.exports = async function (app) {
                 res.redirect('/');
             } else {
                 req.flash("success", "Associado atualizado.");
-                res.redirect('/');
-            }
-            return true;
+                if(req.body.status == 'PRE_CADASTRADO'){
+                    res.redirect('/app/' + rota + '/pre-cadastro');
+                    return true;
+                }else{
+                    res.redirect('/app/' + rota + '/list');
+                    return true;
+                } 
+            }            
         });
     })
 
@@ -436,7 +450,8 @@ module.exports = async function (app) {
                                 id: body.data.id,
                                 nome_escola: body.data.nome_escola,
                                 nome: body.data.nome,
-                                orgao_expedidor: body.data.orgao_expedidor,                               
+                                orgao_expedidor: body.data.orgao_expedidor,
+                                nivel: body.data.nivel,
                                 atividade_funcional: body.data.atividade_funcional,
                                 area: body.data.area,
                                 matricula: body.data.matricula,
@@ -444,6 +459,7 @@ module.exports = async function (app) {
                                 rg: body.data.rg,
                                 cpf: body.data.cpf,
                                 sexo: body.data.sexo,
+                                turno: body.data.turno,
                                 endereco: {
                                     id: body.data.endereco != null ? body.data.endereco.id : null,
                                     logradouro: body.data.endereco != null ? body.data.endereco.logradouro : null,
@@ -472,7 +488,6 @@ module.exports = async function (app) {
                                 tpEstadoCivil: body.data.tpEstadoCivil,
                                 tpRedeEnsino: body.data.tpRedeEnsino,
                                 situacao: body.data.situacao,
-                                turno: body.data.turno,
                                 datanascimento: moment(body.data.datanascimento).format("YYYY-MM-DD"),
                                 tpEscolaridade: body.data.tpEscolaridade,
                                 faixaSalario: body.data.faixaSalario,
@@ -512,7 +527,8 @@ module.exports = async function (app) {
                 "nome_escola": req.body.nome_escola,
                 "nome": req.body.nome,
                 "id": req.body.id,
-                "orgao_expedidor": req.body.orgao_expedidor,                
+                "orgao_expedidor": req.body.orgao_expedidor,
+                "nivel": req.body.nivel,
                 "atividade_funcional": req.body.atividade_funcional,
                 "area": req.body.area,
                 "matricula": req.body.matricula,
@@ -551,9 +567,14 @@ module.exports = async function (app) {
                 res.redirect('/');
             } else {
                 req.flash("success", "Associado atualizado.");
-                res.redirect('/');
-            }
-            return true;
+                if(req.body.status == 'PRE_CADASTRADO'){
+                    res.redirect('/app/' + rota + '/pre-cadastro');
+                    return true;
+                }else{
+                    res.redirect('/app/' + rota + '/list');
+                    return true;
+                } 
+            }            
         });
     })
 
@@ -575,17 +596,17 @@ module.exports = async function (app) {
 
                 if (response.statusCode != 200) {
                     req.flash("danger", "Item não excluído. " + body.errors);
+                    res.redirect('/');
                 } else {
                     req.flash("success", "Item excluído com sucesso.");
-                }
-
-                if(req.body.status == 'PRE_CADASTRADO'){
-                    res.redirect('/app/' + rota + '/pre-cadastro');
-                    return true;
-                }else{
-                    res.redirect('/app/' + rota + '/list');
-                    return true;
-                };                
+                    if(req.body.status == 'PRE_CADASTRADO'){
+                        res.redirect('/app/' + rota + '/pre-cadastro');
+                        return true;
+                    }else{
+                        res.redirect('/app/' + rota + '/list');
+                        return true;
+                    } 
+                }                               
             });
 
         }

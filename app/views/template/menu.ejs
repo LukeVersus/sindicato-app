@@ -1,77 +1,106 @@
 <!-- Sidebar -->
-<ul class="navbar-nav sidebar sidebar-dark accordion" id="accordionSidebar" style="background-color: #4488bd;">
-	<br />
-	<!-- Sidebar - Brand -->
-	<a class="sidebar-brand d-flex align-items-center justify-content-center" href="#"
-		style="margin-top: 10%; margin-bottom: 10%;">
-		<div class="sidebar-brand-icon">
-		<!-- <img src="/img/logosindicato.png" width="200" /> -->
-		</div>
-	</a>
-	<!-- Divider -->
-	<hr class="sidebar-divider my-0">
-	<!-- Divider -->
-	<hr class="sidebar-divider">
-
-	<!-- Heading -->
-	<div class="sidebar-heading">
-		MENU
-	</div>
-
-	<li class="nav-item">
-		<a class="nav-link" href="/app/associado/list">
-			<i class="fas fa-user"></i>
-			<span>Associados</span>
-		</a>
-	</li>
-
-	<li class="nav-item">
-		<a class="nav-link" href="/app/associado/pre-cadastro">
-			<i class="fas fa-user"></i>
-			<span>Pré-Cadastrados</span>
-		</a>
-	</li>
-
-
-	<!-- Nav Item - Tables -->
-	<!-- <li class="nav-item">
-			<a class="nav-link" href="/app/cursoinstituicao/list">
-				<i class="fas fa-map-signs fa-2x"></i>
-				<span>Curso Instituição</span>
-			</a>
-	</li>
--->
-
-	<!-- Nav Item - Pages Collapse Menu 
-	<li class="nav-item">
-		<a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseTwo" aria-expanded="true"
-			aria-controls="collapseTwo">
-			<i class="fas fa-layer-group fa-2x"></i>
-			<span>Acadêmico</span>
-		</a>
-		<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
-			<div class="bg-white py-2 collapse-inner rounded">
-				<h6 class="collapse-header">Itens:</h6>
-				<a class="collapse-item" href="/app/categoria/list">Área</a>
-				<a class="collapse-item" href="/app/curso/list">Cursos</a>
+<section>
+	<!-- Left Sidebar -->
+	<aside id="leftsidebar" class="sidebar">
+		<!-- User Info -->
+		<div class="user-info" style="background: #4488bd no-repeat no-repeat;">                
+			<div class="info-container">
+				<div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= NomeUser %></div>
+				<div class="email"><%= EmailUser %></div>
+				<div class="btn-group user-helper-dropdown">
+					<i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
+					<ul class="dropdown-menu pull-right">
+						<li>
+							<a href="#">
+								<i class="material-icons" style="color:#4488bd;">person</i>
+								Perfil
+							</a>
+						</li>
+						<li role="separator" class="divider"></li>
+						<li>
+							<a href="#">
+								<i class="material-icons" style="color: #4488bd;">miscellaneous_services</i>
+								Alterar Senha
+							</a>
+						</li>
+						<li role="separator" class="divider"></li>
+						<li>
+							<a href="/app/sair">
+								<i class="material-icons" style="color: #4488bd;">input</i>
+								Sair
+							</a>
+						</li>
+					</ul>
+				</div>
 			</div>
 		</div>
-	</li>-->
-	<!--
-	<li class="nav-item">
-		<a class="nav-link" href="/app/usuario/list">
-			<i class="fas fa-user-plus fa-2x"></i>
-			<span>Usuários</span>
-		</a>
-	</li>
--->
-	<!-- Divider -->
-	<hr class="sidebar-divider d-none d-md-block">
+		<!-- #User Info -->
+		<!-- Menu -->
+		<div class="menu">
+			<ul class="list">
+				<li class="header">NAVEGAÇÃO</li>
+				<li>
+					<a href="/app/associado/list">
+						<i style="color:#4488bd" class="material-icons">person</i>
+						<span>Associados</span>
+					</a>
+				</li>
+				<li>
+					<a href="/app/associado/pre-cadastro">
+						<i style="color: #4488bd" class="material-icons">person</i>
+						<span>Pré-Cadastrados</span>
+					</a>
+				</li>
+				<li>
+					<a href="/app/usuario/list">
+						<i style="color: #4488bd" class="material-icons">admin_panel_settings</i>
+						<span>Usuários</span>
+					</a>
+				</li>					
+			   				
+			   
+			 <!--   <li>
+					<a href="javascript:void(0);" class="menu-toggle">
+						<i class="material-icons">widgets</i>
+						<span>Widgets</span>
+					</a>
+					<ul class="ml-menu">
+						<li>
+							<a href="javascript:void(0);" class="menu-toggle">
+								<span>Cards</span>
+							</a>
+							<ul class="ml-menu">
+								<li>
+									<a href="pages/widgets/cards/basic.html">Basic</a>
+								</li>
+							</ul>
+						</li>
+						<li>
+							<a href="javascript:void(0);">
+								<span>Infobox</span>
+							</a>
+						</li>
+					</ul>
+				</li> -->
+			   
+			</ul>
+		</div>
+		<!-- #Menu -->
+		<!-- Footer -->
+		<div class="legal">
+			<div class="copyright">
+				&copy; 2020 <a href="https://www.sinproesemma.org.br/" target="_blank" style="color: #4488bd !important;">SINPROESEMMA</a>
+			</div>
+			<div class="version">
+				<b>Version: </b> 1.0.0
+			</div>
+		</div>
+		<!-- #Footer -->
+	</aside>
+	<!-- #END# Left Sidebar -->
+	<!-- Right Sidebar -->
+	<!-- #END# Right Sidebar -->
+</section>
+ 
 
-	<!-- Sidebar Toggler (Sidebar) -->
-	<div class="text-center d-none d-md-inline">
-		<button class="rounded-circle border-0" id="sidebarToggle"></button>
-	</div>
-
-</ul>
 <!-- End of Sidebar -->

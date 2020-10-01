@@ -40,6 +40,10 @@ module.exports = async function (app) {
                 "username": req.body.email,
             },
         }, function (error, response, body) {
+            IdUser = body.usuario.id;
+            NomeUser = body.usuario.nome;
+            EmailUser = body.usuario.email;
+            
             if (response.statusCode != 201) {
                 req.flash("danger", body.errors);
                 res.redirect('/');

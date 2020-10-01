@@ -44,10 +44,10 @@ module.exports = async function (app) {
                         id: body.data.content[i].id,
                         nome: body.data.content[i].nome,
                         cpf: body.data.content[i].cpf,
-                        status: body.data.content[i].status
+                        contato: body.data.content[i].endereco.tel_cel
                     };
 
-                    if(body.data.content[i].status != 'PRE_AGENDADO'){
+                    if(body.data.content[i].status != 'PRE_CADASTRADO'){
                         lista.push(finallista);
                     };
                 }
@@ -86,6 +86,7 @@ module.exports = async function (app) {
                         id: body.data.content[i].id,
                         nome: body.data.content[i].nome,
                         cpf: body.data.content[i].cpf,
+                        contato: body.data.content[i].endereco.tel_cel
                     };
                     lista.push(finallista);
                 }
@@ -124,7 +125,7 @@ module.exports = async function (app) {
                         id: body.data.content[i].id,
                         nome: body.data.content[i].nome,
                         cpf: body.data.content[i].cpf,
-                        status: body.data.content[i].status
+                        contato: body.data.content[i].endereco.tel_cel
                     };
                     if(body.data.content[i].status == 'PRE_CADASTRADO'){
                         lista.push(finallista);
@@ -194,8 +195,7 @@ module.exports = async function (app) {
             json: {
                 "nome_escola": req.body.nome_escola,
                 "nome": req.body.nome,
-                "orgao_expedidor": req.body.orgao_expedidor,
-                "nivel": req.body.nivel,
+                "orgao_expedidor": req.body.orgao_expedidor,               
                 "atividade_funcional": req.body.atividade_funcional,
                 "matricula": req.body.matricula,
                 "rg": req.body.rg,
@@ -231,7 +231,7 @@ module.exports = async function (app) {
                 res.redirect('/');
             } else {
                 req.flash("success", "Associado cadastrado.");
-                res.redirect('/');
+                res.redirect('/app/' + rota + '/Pre-cadastro');
             }
             return true;
         });
@@ -278,8 +278,7 @@ module.exports = async function (app) {
                                 id: body.data.id,
                                 nome_escola: body.data.nome_escola,
                                 nome: body.data.nome,
-                                orgao_expedidor: body.data.orgao_expedidor,
-                                nivel: body.data.nivel,
+                                orgao_expedidor: body.data.orgao_expedidor,                                
                                 atividade_funcional: body.data.atividade_funcional,
                                 area: body.data.area,
                                 matricula: body.data.matricula,
@@ -314,6 +313,7 @@ module.exports = async function (app) {
                                 disciplina: body.data.disciplina,
                                 tpEstadoCivil: body.data.tpEstadoCivil,
                                 tpRedeEnsino: body.data.tpRedeEnsino,
+                                turno: body.data.turno,
                                 situacao: body.data.situacao,
                                 datanascimento: moment(body.data.datanascimento).format("YYYY-MM-DD"),
                                 tpEscolaridade: body.data.tpEscolaridade,
@@ -354,8 +354,165 @@ module.exports = async function (app) {
                 "nome_escola": req.body.nome_escola,
                 "nome": req.body.nome,
                 "id": req.body.id,
-                "orgao_expedidor": req.body.orgao_expedidor,
-                "nivel": req.body.nivel,
+                "orgao_expedidor": req.body.orgao_expedidor,                
+                "atividade_funcional": req.body.atividade_funcional,
+                "area": req.body.area,
+                "matricula": req.body.matricula,
+                "rg": req.body.rg,
+                "cpf": cpf,
+                "sexo": req.body.sexo,
+                "turno": req.body.turno,
+                "endereco": {
+                    "logradouro": req.body.logradouro,
+                    "numero": req.body.numero,
+                    "complemento": req.body.complemento,
+                    "bairro": req.body.bairro,
+                    "cep": req.body.cep,
+                    "tel_res": req.body.tel_res,
+                    "tel_cel": req.body.tel_cel,
+                    "municipio": {
+                        "id": req.body.municipio
+                    }
+                },
+                "disciplina": req.body.disciplina,
+                "tpEstadoCivil": req.body.tpEstadoCivil,
+                "tpRedeEnsino": req.body.tpRedeEnsino,
+                "situacao": req.body.situacao, 
+                "datanascimento": datanasc,
+                "tpEscolaridade": req.body.tpEscolaridade,
+                "faixaSalario": req.body.faixaSalario,
+                "celular": req.body.celular
+
+            },
+
+        }, function (error, response, body) {
+            if (response.statusCode != 200) {
+                req.flash("danger", "Não foi possível cadastrar. " + body.errors);
+                res.redirect('/');
+            } else {
+                req.flash("success", "Associado atualizado.");
+                res.redirect('/');
+            }
+            return true;
+        });
+    })
+
+      // Rota para exibição da View Editar PRE-CADASTRADOS
+      app.get('/app/' + rota + '/edit-pre-cadastro/:id', function (req, res) {
+        if (!req.session.token) {
+            res.redirect('/app/login');
+        } else {
+            request({
+                url: process.env.API_HOST + "municipio/estado/21",
+                method: "GET",
+                json: true,
+                headers: {
+                    "content-type": "application/json",
+                },
+            }, async function (error, response, body) {
+                estados = [];
+                for (var i = 0; i < Object.keys(body.data).length; i++) {
+                    const finalarea = {
+                        id: body.data[i].id,
+                        nome: body.data[i].nome,
+                        sigla: body.data[i].sigla
+                    };
+                    estados.push(finalarea);
+                }
+                request({
+                    url: process.env.API_HOST + rota + "/" + req.params.id,
+                    method: "GET",
+                    json: true,
+                    headers: {
+                        "content-type": "application/json",
+                        "Authorization": req.session.token
+                    },
+                }, function (error, response, body) {
+
+                    res.format({
+                        html: function () {
+                            res.render(rota + '/Edit-pre-cadastro', {
+
+                                id: body.data.id,
+                                nome_escola: body.data.nome_escola,
+                                nome: body.data.nome,
+                                orgao_expedidor: body.data.orgao_expedidor,                               
+                                atividade_funcional: body.data.atividade_funcional,
+                                area: body.data.area,
+                                matricula: body.data.matricula,
+                                status: body.data.status,
+                                rg: body.data.rg,
+                                cpf: body.data.cpf,
+                                sexo: body.data.sexo,
+                                endereco: {
+                                    id: body.data.endereco != null ? body.data.endereco.id : null,
+                                    logradouro: body.data.endereco != null ? body.data.endereco.logradouro : null,
+                                    numero: body.data.endereco != null ? body.data.endereco.numero : null,
+                                    complemento: body.data.endereco != null ? body.data.endereco.complemento : null,
+                                    bairro: body.data.endereco != null ? body.data.endereco.bairro : null,
+                                    cep: body.data.endereco != null ? body.data.endereco.cep : null,
+                                    tel_res: body.data.endereco != null ? body.data.endereco.tel_res : null,
+                                    tel_cel: body.data.endereco != null ? body.data.endereco.tel_cel : null,
+                                    //municipio: body.data.endereco.municipio.id,
+                                    /*
+                                    municipio: {
+    
+                                        id: body.data.endereco != null ? body.data.endereco.municipio.id : 0,
+                                        nome: body.data.endereco != null ? body.data.endereco.municipio.nome : '',
+                                        estado: {
+                                            id: body.data.endereco != null ? body.data.endereco.municipio.estado.id : 0,
+                                            nome: body.data.endereco != null ? body.data.endereco.municipio.estado.nome : '',
+                                            sigla: body.data.endereco != null ? body.data.endereco.municipio.estado.sigla : '',
+                                        }
+                                    }
+                                    */
+                                },
+                                usuario: body.data.usuario != null ? body.data.usuario.id : null,
+                                disciplina: body.data.disciplina,
+                                tpEstadoCivil: body.data.tpEstadoCivil,
+                                tpRedeEnsino: body.data.tpRedeEnsino,
+                                situacao: body.data.situacao,
+                                turno: body.data.turno,
+                                datanascimento: moment(body.data.datanascimento).format("YYYY-MM-DD"),
+                                tpEscolaridade: body.data.tpEscolaridade,
+                                faixaSalario: body.data.faixaSalario,
+                                celular: body.data.celular,
+                                page: rota,
+                                informacoes: req.session.json,
+                                itensEstados: estados
+                            });
+                        }
+                    });
+                });
+            });
+        }
+    });
+
+    // Rota para receber parametros via post editar item
+    app.post('/app/' + rota + '/edit-pre-cadastro/submit', function (req, res) {
+        var cadastrodata = moment.now();
+        var datanasc = moment(req.body.datanascimento).toDate();
+        var cpf = req.body.cpf;
+        var validacao;
+        if(req.body.status == 'APROVAR'){
+            validacao = true;
+        }
+        cpf = cpf.replace('.', '');
+        cpf = cpf.replace('.', '');
+        cpf = cpf.replace('-', '');
+        request({
+            url: process.env.API_HOST + rota,
+            method: "PUT",
+            json: true,
+            headers: {
+                "content-type": "application/json",
+                "Authorization": req.session.token
+            },
+            json: {
+                "nome_escola": req.body.nome_escola,
+                "nome": req.body.nome,
+                "id": req.body.id,
+                "orgao_expedidor": req.body.orgao_expedidor,                
                 "atividade_funcional": req.body.atividade_funcional,
                 "area": req.body.area,
                 "matricula": req.body.matricula,
@@ -400,6 +557,7 @@ module.exports = async function (app) {
         });
     })
 
+
     // Rota para exclusão de um item
     app.post('/app/' + rota + '/delete/', function (req, res) {
         if (!req.session.token) {
@@ -421,8 +579,13 @@ module.exports = async function (app) {
                     req.flash("success", "Item excluído com sucesso.");
                 }
 
-                res.redirect('/app/' + rota + '/list');
-                return true;
+                if(req.body.status == 'PRE_CADASTRADO'){
+                    res.redirect('/app/' + rota + '/pre-cadastro');
+                    return true;
+                }else{
+                    res.redirect('/app/' + rota + '/list');
+                    return true;
+                };                
             });
 
         }

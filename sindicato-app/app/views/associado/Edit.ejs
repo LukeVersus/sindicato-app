@@ -137,9 +137,9 @@
 														<div class="col-sm-3">
 															Sexo
 															<select name="sexo" id="sexo" class="form-control">
-																<option value="MASCULINO" <% sexo == 'MASCULINO' ? 'selected' : '' %>>MASCULINO
+																<option value="MASCULINO" <%= sexo == 'MASCULINO' ? 'selected' : '' %>>MASCULINO
 																</option>
-																<option value="FEMININO" <% sexo == 'FEMININO' ? 'selected' : '' %>>FEMININO</option>
+																<option value="FEMININO" <%= sexo == 'FEMININO' ? 'selected' : '' %>>FEMININO</option>
 															</select>
 														</div>
 
@@ -150,13 +150,13 @@
 															Estado Civil:
 															<select name="tpEstadoCivil" id="tpEstadoCivil"
 																class="form-control">
-																<option value="SOLTEIRO" <% tpEstadoCivil == 'SOLTEIRO' ? 'selected' : '' %>>SOLTEIRO(A)
+																<option value="SOLTEIRO" <%= tpEstadoCivil == 'SOLTEIRO' ? 'selected' : '' %>>SOLTEIRO(A)
 																</option>
-																<option value="CASADO" <% tpEstadoCivil == 'CASADO' ? 'selected' : '' %>>CASADO(A)</option>
-																<option value="UNIAO_ESTAVEL" <% tpEstadoCivil == 'UNIAO_ESTAVEL' ? 'selected' : '' %>>UNIAO_ESTAVEL</option>
-																<option value="DIVORCIADO" <% tpEstadoCivil == 'DIVORCIADO' ? 'selected' : '' %>>DIVORCIADO(A)</option>
-																<option value="VIUVO" <% tpEstadoCivil == 'VIUVO' ? 'selected' : '' %>>VIUVO(A)</option>
-																<option value="SEPARADO" <% tpEstadoCivil == 'SEPARADO' ? 'selected' : '' %>>SEPARADO(A)</option>
+																<option value="CASADO" <%= tpEstadoCivil == 'CASADO' ? 'selected' : '' %>>CASADO(A)</option>
+																<option value="UNIAO_ESTAVEL" <%= tpEstadoCivil == 'UNIAO_ESTAVEL' ? 'selected' : '' %>>UNIAO_ESTAVEL</option>
+																<option value="DIVORCIADO" <%= tpEstadoCivil == 'DIVORCIADO' ? 'selected' : '' %>>DIVORCIADO(A)</option>
+																<option value="VIUVO" <%= tpEstadoCivil == 'VIUVO' ? 'selected' : '' %>>VIUVO(A)</option>
+																<option value="SEPARADO" <%= tpEstadoCivil == 'SEPARADO' ? 'selected' : '' %>>SEPARADO(A)</option>
 															</select>
 														</div>
 
@@ -344,19 +344,19 @@
 															Escolaridade:
 															<select name="tpEscolaridade" id="tpEscolaridade"
 																class="form-control">
-																<option value="FUNDAMENTAL">FUNDAMENTAL
+																<option value="FUNDAMENTAL"  <%= tpEscolaridade == 'FUNDAMENTAL' ? 'selected' : '' %>>FUNDAMENTAL
 																</option>
-																<option value="ENSINO_MEDIO_INCOMPLETO">ENSINO MÉDIO
+																<option value="ENSINO_MEDIO_INCOMPLETO"  <%= tpEscolaridade == 'ENSINO_MEDIO_INCOMPLETO' ? 'selected' : '' %>>ENSINO MÉDIO
 																	INCOMPLETO</option>
-																<option value="ENSINO_MEDIO_COMPLETO">ENSINO MÉDIO
+																<option value="ENSINO_MEDIO_COMPLETO" <%= tpEscolaridade == 'ENSINO_MEDIO_COMPLETO' ? 'selected' : '' %>>ENSINO MÉDIO
 																	COMPLETO</option>
-																<option value="SUPERIOR_INCOMPLETO">SUPERIOR INCOMPLETO
+																<option value="SUPERIOR_INCOMPLETO" <%= tpEscolaridade == 'SUPERIOR_INCOMPLETO' ? 'selected' : '' %>>SUPERIOR INCOMPLETO
 																</option>
-																<option value="SUPERIOR_COMPLETO">SUPERIOR COMPLETO
+																<option value="SUPERIOR_COMPLETO" <%= tpEscolaridade == 'SUPERIOR_COMPLETO' ? 'selected' : '' %>>SUPERIOR COMPLETO
 																</option>
-																<option value="ESPECIALIZACAO">ESPECIALIZACAO</option>
-																<option value="MESTRADO">MESTRADO</option>
-																<option value="DOUTORADO">DOUTORADO</option>
+																<option value="ESPECIALIZACAO" <%= tpEscolaridade == 'ESPECIALIZACAO' ? 'selected' : '' %>>ESPECIALIZACAO</option>
+																<option value="MESTRADO" <%= tpEscolaridade == 'MESTRADO' ? 'selected' : '' %>>MESTRADO</option>
+																<option value="DOUTORADO" <%= tpEscolaridade == 'DOUTORADO' ? 'selected' : '' %>>DOUTORADO</option>
 															</select>
 														</div>
 

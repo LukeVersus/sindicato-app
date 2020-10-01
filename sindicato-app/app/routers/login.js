@@ -4,6 +4,7 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 var candidatoId;
 var candidatoNome;
+let usuario;
 
 module.exports = async function (app) {
     app.use(cookieParser());

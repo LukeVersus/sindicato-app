@@ -6,6 +6,8 @@ const rota = require('path').basename(__filename, '.js');
 var multer = require('multer');
 var upload = multer();
 let lista = [];
+let estados = [];
+let setores = [];
 var moment = require('moment');
 
 
@@ -27,7 +29,7 @@ module.exports = async function (app) {
         if (!req.session.token) {
             res.redirect('/app/login');
         } else {
-            teste = request({
+            request({
                 url: process.env.API_HOST + rota + "/0/10?sort=nome!asc",
                 method: "GET",
                 json: true,
@@ -66,7 +68,7 @@ module.exports = async function (app) {
             } else {
                 url = process.env.API_HOST + rota + "/" + req.body.page + "/" + req.body.size + "?sort=nome!asc";
             }
-            teste = request({
+            request({
                 url: url,
                 method: "GET",
                 json: true,
@@ -331,7 +333,7 @@ module.exports = async function (app) {
                     }
                 },
                 "disciplina": req.body.disciplina,
-                "tpEstadoCivil": "SOLTEIRO",
+                "tpEstadoCivil": req.body.tpEstadoCivil,
                 "tpRedeEnsino": req.body.tpRedeEnsino,
                 "situacao": req.body.situacao,
                 "datanascimento": datanasc,

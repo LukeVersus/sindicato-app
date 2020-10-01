@@ -86,7 +86,7 @@
 										<div class="input-group">
 											<div class="form-line">
 												Telefone
-												<input type="phone" class="form-control" id="contato1" name="contato1" value="<%= contato1 %>">
+												<input type="phone" class="form-control" id="telefone" name="telefone" value="<%= telefone %>">
 											</div>
 										</div>
 									</div>
@@ -95,9 +95,13 @@
 									<div class="col-sm-4">
 										<div class="input-group">
 											<div class="form-line">
-												Celular
-												<input type="phone" class="form-control" id="contato2" name="contato2"
-													value="<%= contato2 %>">
+												Nivel
+												<select class="form-control" id="niveis" name="niveis">
+													<option value="ADMIN" <%= niveis == 'ADMIN' ? 'selected' : '' %>>Admin
+													</option>
+													<option value="FILIAL" <%= niveis == 'FILIAL' ? 'selected' : '' %>>Filial
+													</option>
+												</select>
 											</div>
 										</div>
 									</div>
@@ -110,9 +114,6 @@
 											</div>
 										</div>
 									</div>
-
-								</div>
-								<div class="row clearfix">
 									<div class="col-sm-3">
 										<div class="input-group">
 											Ativo
@@ -124,7 +125,7 @@
 											</select>
 										</div>
 									</div>
-								</div>
+								</div>								
 								
 								<input type="hidden" id="id" name="id" value="<%= id %>">
 

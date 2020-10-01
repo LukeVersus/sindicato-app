@@ -6,6 +6,7 @@ var candidatoId;
 var candidatoNome;
 let usuario;
 
+
 module.exports = async function (app) {
     app.use(cookieParser());
     app.use(session({ secret: "2C44-4D44-WppQ38S" }));
@@ -42,6 +43,7 @@ module.exports = async function (app) {
         }, function (error, response, body) {
             IdUser = body.usuario.id;
             NomeUser = body.usuario.nome;
+            NivelUser = body.usuario.niveis;
             EmailUser = body.usuario.email;
             NivelUser = body.usuario.niveis;
                         

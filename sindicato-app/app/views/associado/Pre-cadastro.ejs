@@ -88,19 +88,13 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-4 text-gray-800">Listagem de Associados</h1>
+                    <h1 class="h3 mb-4 text-gray-800">Listagem de Associados Pré-Cadastrados</h1>
 
                     <%- messages() %>
 
                     <div class="card shadow mb-4">
 
-                        <div class="card-body">
-                            <div class="form-group row form-inline">
-                                <a href="/app/<%= page %>/create" class="btn btn-primary btn-sm" data-toggle="tooltip"
-                                    title="Adicionar" style="margin-left: 10px;">
-                                    <i class="fas fa-plus"></i> Adicionar Associado
-                                </a>
-                            </div>
+                        <div class="card-body">                           
                             <div class="form-group row form-inline" style="margin-bottom: 12px;">
                                 <div class="col-sm-8">
                                     Visualizar
@@ -136,19 +130,19 @@
                                         </tr>
                                     </tfoot>
                                     <tbody id="table_body">
-                                        <% for (var i = 0; i < itens.length; i++) { %>
+                                        <% for (var i = 0; i < itensDois.length; i++) { %>
                                         <tr>
-                                            <td><%= itens[i].cpf %></td>
-                                            <td><%= itens[i].nome %></td>
+                                            <td><%= itensDois[i].cpf %></td>
+                                            <td><%= itensDois[i].nome %></td>
                                             <td>
-                                                <a href="/app/<%= page %>/edit/<%= itens[i].id %>"
+                                                <a href="/app/<%= page %>/edit/<%= itensDois[i].id %>"
                                                     class="btn btn-warning btn-circle btn-sm" data-toggle="tooltip"
                                                     data-placement="left" title="Editar">
                                                     <i class="fas fa-edit"></i>
                                                 </a>
                                                 <a href="#" class="btn btn-danger btn-circle btn-sm" data-toggle="modal"
                                                     data-target="#logoutModal"
-                                                    onclick="setaDadosModal('<%= itens[i].id %>')">
+                                                    onclick="setaDadosModal('<%= itensDois[i].id %>')">
                                                     <i class="far fa-trash-alt"></i>
                                                 </a>
                                             </td>

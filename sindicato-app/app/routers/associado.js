@@ -6,7 +6,6 @@ const rota = require('path').basename(__filename, '.js');
 var multer = require('multer');
 var upload = multer();
 let lista = [];
-let listaDois = [];
 let estados = [];
 let setores = [];
 var moment = require('moment');
@@ -40,31 +39,21 @@ module.exports = async function (app) {
                 },
             }, function (error, response, body) {
                 lista = [];
-                listaDois = [];
                 for (var i = 0; i < Object.keys(body.data.content).length; i++) {
-                    if(body.data.content[i].validacao == true) {
-                        const finallista = {
-                            id: body.data.content[i].id,
-                            nome: body.data.content[i].nome,
-                            cpf: body.data.content[i].cpf,
-                            status: body.data.content[i].status,
-                            contato: body.data.content[i].endereco.tel_cel,
-                        };
+                    const finallista = {
+                        id: body.data.content[i].id,
+                        nome: body.data.content[i].nome,
+                        cpf: body.data.content[i].cpf,
+                        status: body.data.content[i].status
+                    };
+
+                    if(body.data.content[i].status != 'PRE_AGENDADO'){
                         lista.push(finallista);
-                    } else {
-                        const finallista = {
-                            id: body.data.content[i].id,
-                            nome: body.data.content[i].nome,
-                            cpf: body.data.content[i].cpf,
-                            status: body.data.content[i].status,
-                            contato: body.data.content[i].endereco.tel_cel,
-                        };
-                        listaDois.push(finallista);
-                    }
+                    };
                 }
                 res.format({
                     html: function () {
-                        res.render(rota + '/List', { itens: lista, itensDois: listaDois, page: rota, informacoes: req.session.json, number: body.data.number, totalPages: body.data.totalPages, });
+                        res.render(rota + '/List', { itens: lista, page: rota, informacoes: req.session.json, number: body.data.number, totalPages: body.data.totalPages});
                     }
                 });
                 return lista;
@@ -114,6 +103,42 @@ module.exports = async function (app) {
         }
     });
 
+
+    // Rota para exibição da View Listar pre-cadastrados
+    app.get('/app/' + rota + '/pre-cadastro', function (req, res) {
+        if (!req.session.token) {
+            res.redirect('/app/login');
+        } else {
+            request({
+                url: process.env.API_HOST + rota + "/0/10?sort=nome!asc",
+                method: "GET",
+                json: true,
+                headers: {
+                    "content-type": "application/json",
+                    "Authorization": req.session.token
+                },
+            }, function (error, response, body) {
+                lista = [];
+                for (var i = 0; i < Object.keys(body.data.content).length; i++) {
+                    const finallista = {
+                        id: body.data.content[i].id,
+                        nome: body.data.content[i].nome,
+                        cpf: body.data.content[i].cpf,
+                        status: body.data.content[i].status
+                    };
+                    if(body.data.content[i].status == 'PRE_CADASTRADO'){
+                        lista.push(finallista);
+                    };                    
+                }
+                res.format({
+                    html: function () {
+                        res.render(rota + '/Pre-cadastro', { itensDois: lista, page: rota, informacoes: req.session.json, number: body.data.number, totalPages: body.data.totalPages, });
+                    }
+                });
+                return lista;
+            });
+        }
+    });
 
 
     // Rota para exibição da View Criar
@@ -193,10 +218,11 @@ module.exports = async function (app) {
                 "tpEstadoCivil": req.body.tpEstadoCivil,
                 "tpRedeEnsino": req.body.tpRedeEnsino,
                 "situacao": req.body.situacao,
+                "status": "PRE_CADASTRADO",
+                "validacao": false,
                 "datanascimento": datanasc,
                 "tpEscolaridade": req.body.tpEscolaridade,
-                "faixaSalario": req.body.faixaSalario,
-                "validacao": false
+                "faixaSalario": req.body.faixaSalario
             },
 
         }, function (error, response, body) {
@@ -218,8 +244,6 @@ module.exports = async function (app) {
         if (!req.session.token) {
             res.redirect('/app/login');
         } else {
-
-            console.log('akkki');
             request({
                 url: process.env.API_HOST + "municipio/estado/21",
                 method: "GET",
@@ -259,10 +283,10 @@ module.exports = async function (app) {
                                 atividade_funcional: body.data.atividade_funcional,
                                 area: body.data.area,
                                 matricula: body.data.matricula,
+                                status: body.data.status,
                                 rg: body.data.rg,
                                 cpf: body.data.cpf,
                                 sexo: body.data.sexo,
-                                turno: body.data.turno,
                                 endereco: {
                                     id: body.data.endereco != null ? body.data.endereco.id : null,
                                     logradouro: body.data.endereco != null ? body.data.endereco.logradouro : null,
@@ -311,6 +335,10 @@ module.exports = async function (app) {
         var cadastrodata = moment.now();
         var datanasc = moment(req.body.datanascimento).toDate();
         var cpf = req.body.cpf;
+        var validacao;
+        if(req.body.status == 'APROVAR'){
+            validacao = true;
+        }
         cpf = cpf.replace('.', '');
         cpf = cpf.replace('.', '');
         cpf = cpf.replace('-', '');
@@ -351,6 +379,8 @@ module.exports = async function (app) {
                 "tpEstadoCivil": req.body.tpEstadoCivil,
                 "tpRedeEnsino": req.body.tpRedeEnsino,
                 "situacao": req.body.situacao,
+                "status": req.body.status,
+                "validacao": validacao,
                 "datanascimento": datanasc,
                 "tpEscolaridade": req.body.tpEscolaridade,
                 "faixaSalario": req.body.faixaSalario,

@@ -30,56 +30,51 @@ module.exports = async function (app) {
         next();
     });
 
-    // Rota para exibição da View Listar
-    app.get('/app/' + rota + '/list', function (req, res) {
-
+     // Rota para exibição da View Listar
+     app.get('/app/' + rota + '/list', function (req, res) {
         if (!req.session.token) {
             res.redirect('/app/login');
-        } else if (req.session.usuario.niveis[0] != 'ADMIN') {
-            res.redirect('/');
         } else {
-            teste = request({
-                url: process.env.API_HOST + rota + "/nome/nivel/0/10",
-                method: "GET",
-                json: true,
-                headers: {
-                    "content-type": "application/json",
-                    "Authorization": req.session.token
-                },
-            }, function (error, response, body) {
-                lista = [];
+            if (!req.session.token) {
+                res.redirect('/app/login');
+            } else if (NivelUser != 'ADMIN') {
+                res.redirect('/');
+            } else {    
+                request({
+                    url: process.env.API_HOST + rota + "/0/10?sort=nome!asc",
+                    method: "GET",
+                    json: true,
+                    headers: {
+                        "content-type": "application/json",
+                        "Authorization": req.session.token
+                    },
+                }, function (error, response, body) {
+                    lista = [];
+                    for (var i = 0; i < Object.keys(body.data.content).length; i++) {
+                        const finallista = {
+                            id: body.data.content[i].id,
+                            nome: body.data.content[i].nome,
+                            username: body.data.content[i].username,
+                            niveis: body.data.content[i].niveis,
+                            ativo: body.data.content[i].ativo,
+                            bloqueado: body.data.content[i].bloqueado,
+                            expirado: body.data.content[i].expirado,
+                            habilitado: body.data.content[i].habilitado,
+                            telefone: body.data.content[i].telefone,
+                            email: body.data.content[i].email
 
-                for (var i = 0; i < Object.keys(body.data.content).length; i++) {
-                    if (body.data.content[i].contato1 == null || body.data.content[i].contato1 == '') {
-                        body.data.content[i].contato1 = body.data.content[i].contato2
-                    }
-                    const finallista = {
-                        id: body.data.content[i].id,
-                        nome: body.data.content[i].nome,
-                        username: body.data.content[i].username,
-                        niveis: body.data.content[i].niveis,
-                        ativo: body.data.content[i].ativo,
-                        telefone: body.data.content[i].telefone,
-                        email: body.data.content[i].email
-
-                    };
-                    lista.push(finallista);
-                }
-                res.format({
-                    html: function () {
-                        res.render(rota + '/List', {
-                            itens: lista,
-                            page: rota,
-                            informacoes: req.session.json,
-                            number: body.data.number,
-                            totalPages: body.data.totalPages
-                        });
+                        };
+                        lista.push(finallista);
 
                     }
+                    res.format({
+                        html: function () {
+                            res.render(rota + '/List', { itens: lista, page: rota, informacoes: req.session.json, number: body.data.number, totalPages: body.data.totalPages});
+                        }
+                    });
+                    return lista;
                 });
-                return lista;
-            });
-
+            }
         }
     });
 
@@ -99,14 +94,7 @@ module.exports = async function (app) {
     // Rota para receber parametros via post criar item
     app.post('/app/' + rota + '/create/submit', upload.single('photo'), function (req, res) {
 
-        const file = req.file;
-        let foto;
-        if (file) {
-            const buf = Buffer.from(req.file.buffer);
-            foto = buf.toString('base64');
-        } else {
-            foto = process.env.PROFILE_IMG
-        }
+        
         request({
             url: process.env.API_HOST + rota,
             method: "POST",
@@ -119,7 +107,7 @@ module.exports = async function (app) {
                 "nome": req.body.nome,
                 "username": req.body.username,
                 "password": req.body.password,
-                "niveis": ["ADMIN"],
+                "niveis": req.body.niveis,
                 "ativo": req.body.ativo,
                 "habilitado": true,
                 "expirado": false,
@@ -143,55 +131,47 @@ module.exports = async function (app) {
     });
 
     // Rota para exibição da View Editar
+    // Rota para exibição da View Editar
     app.get('/app/' + rota + '/edit/:id', function (req, res) {
+
         if (!req.session.token) {
             res.redirect('/app/login');
-
         } else {
             request({
                 url: process.env.API_HOST + rota + "/" + req.params.id,
-                method: "GET",
-                json: true,
-                headers: {
-                    "content-type": "application/json",
-                    "Authorization": req.session.token
-                },
-            }, function (error, response, body) {
-
-                res.format({
-                    html: function () {
-                        res.render(rota + '/Edit', {
+                    method: "GET",
+                    json: true,
+                    headers: {
+                        "content-type": "application/json",
+                        "Authorization": req.session.token
+                    },
+                }, function (error, response, body) {
+                    username = body.data.username;
+                    res.format({
+                        html: function () {
+                            res.render(rota + '/Edit', {
                             id: body.data.id,
                             nome: body.data.nome,
                             username: body.data.username,
                             password: body.data.password,
+                            niveis: body.data.niveis,
                             page: rota,
                             ativo: body.data.ativo,
-                            contato1: body.data.contato1,
-                            contato2: body.data.contato2,
+                            telefone: body.data.telefone,                           
                             email: body.data.email,
                             informacoes: req.session.json
-                        });
-                    }
-                });
-                nivel = body.data.niveis;
-                username = body.data.username;
-                imagem = body.data.imgCapa;
-            });
-        }
-    });
+                            });
+                        }
+                    });
+                });  
+            }
+        });
+
+    
 
     // Rota para receber parametros via post editar item
     app.post('/app/' + rota + '/edit/submit', upload.single('photo'), function (req, res) {
 
-        const file = req.file;
-        let foto;
-        if (file) {
-            const buf = Buffer.from(req.file.buffer);
-            foto = buf.toString('base64');
-        } else {
-            foto = imagem;
-        }
         request({
             url: process.env.API_HOST + rota,
             method: "PUT",
@@ -204,9 +184,8 @@ module.exports = async function (app) {
                 "id": req.body.id,
                 "nome": req.body.nome,
                 "username": username,
-                "niveis": nivel,
-                "contato1": req.body.contato1,
-                "contato2": req.body.contato2,
+                "niveis": [req.body.niveis],
+                "telefone": req.body.telefone,                
                 "email": req.body.email,
                 "ativo": req.body.ativo,
             },
@@ -272,18 +251,17 @@ module.exports = async function (app) {
                 res.format({
                     html: function () {
                         res.render(rota + '/Perfil', {
-                            id: body.data.id,
-                            nome: body.data.nome,
-                            username: body.data.username,
-                            password: body.data.password,
+                            id: body.data.content.id,
+                            nome: body.data.content.nome,
+                            username: body.data.content.username,
+                            password: body.data.content.password,
                             page: rota,
-                            ativo: body.data.ativo,
-                            habilitado: body.data.habilitado,
-                            expirado: body.data.expirado,
-                            bloqueado: body.data.bloqueado,
-                            contato1: body.data.contato1,
-                            contato2: body.data.contato2,
-                            email: body.data.email,
+                            ativo: body.data.content.ativo,
+                            habilitado: body.data.content.habilitado,
+                            expirado: body.data.content.expirado,
+                            bloqueado: body.data.content.bloqueado,
+                            telefone: body.data.content.telefone,                            
+                            email: body.data.content.email,
                             informacoes: req.session.json
                         });
                     }
@@ -354,17 +332,14 @@ module.exports = async function (app) {
             }, function (error, response, body) {
                 lista = [];
                 for (var i = 0; i < Object.keys(body.data.content).length; i++) {
-                    if (body.data.content[i].contato1 == null || body.data.content[i].contato1 == '') {
-                        body.data.content[i].contato1 = body.data.content[i].contato2
-                    }
+                    
                         const finallista = {
                             id: body.data.content[i].id,
                             nome: body.data.content[i].nome,
                             username: body.data.content[i].username,
                             niveis: body.data.content[i].niveis,
                             ativo: body.data.content[i].ativo,
-                            contato1: body.data.content[i].contato1, //telefone
-                            contato2: body.data.content[i].contato2, //celular
+                            telefone: body.data.content[i].telefone, //telefone                            
                             email: body.data.content[i].email
 
                         };

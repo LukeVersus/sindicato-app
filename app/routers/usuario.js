@@ -92,7 +92,6 @@ module.exports = async function (app) {
 
     // Rota para receber parametros via post criar item
     app.post('/app/' + rota + '/create/submit', upload.single('photo'), function (req, res) {
-
         
         request({
             url: process.env.API_HOST + rota,
@@ -114,23 +113,25 @@ module.exports = async function (app) {
                 "telefone": req.body.telefone,                
                 "email": req.body.email
             },
+
         }, function (error, response, body) {
 
             if (response.statusCode != 200) {
-                req.flash("danger", "Não foi possível criar usuário. " + body.errors);
+                req.flash("danger", "Não foi possível cadastrar. " + body.errors);
+                res.redirect('/');
             } else {
-                req.flash("success", "Usuário criado com sucesso.");
-            }
-
-            res.redirect('/app/' + rota + '/list');
-            return true;
+                req.flash("success", "Associado cadastrado.");
+                if(req.body.status == 'PRE_CADASTRADO'){
+                    res.redirect('/app/' + rota + '/pre-cadastro');
+                    return true;
+                }else{
+                    res.redirect('/app/' + rota + '/list');
+                    return true;
+                } 
+            }            
         });
-
     });
-
-
-
-    // Rota para exibição da View Editar
+    
     // Rota para exibição da View Editar
     app.get('/app/' + rota + '/edit/:id', function (req, res) {
 
@@ -185,7 +186,7 @@ module.exports = async function (app) {
                 "id": req.body.id,
                 "nome": req.body.nome,
                 "username": username,
-                "niveis": NivelUser,
+                "niveis": [req.body.niveis],
                 "telefone": req.body.telefone,
                 "email": req.body.email,
                 "ativo": req.body.ativo,

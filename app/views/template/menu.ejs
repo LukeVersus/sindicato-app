@@ -1,4 +1,10 @@
 <!-- Sidebar -->
+
+<% if (NivelUser != "ADMIN") { %>
+    <%- include menu-filial.ejs %>
+<% } else if (NivelUser == "ADMIN") { %>
+
+
 <section>
 	<!-- Left Sidebar -->
 	<aside id="leftsidebar" class="sidebar">
@@ -47,7 +53,7 @@
 				</li>
 				<li>
 					<a href="/app/associado/pre-cadastro">
-						<i style="color: #4488bd" class="material-icons">person</i>
+						<i style="color: #4488bd" class="material-icons">person_outline</i>
 						<span>Pré-Cadastrados</span>
 					</a>
 				</li>
@@ -102,5 +108,5 @@
 	<!-- #END# Right Sidebar -->
 </section>
  
-
+<% } %>
 <!-- End of Sidebar -->

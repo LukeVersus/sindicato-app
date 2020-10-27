@@ -105,7 +105,7 @@
 													<div class="form-line">
 														Nome:
 															<input type="text" class="form-control" id="nome"
-																name="nome" value="<%= nome %>" required>
+																name="nome" value="<%= nome %>" required treatment="capitalize">
 													</div>
 												</div>
 											</div>
@@ -125,7 +125,7 @@
 													<div class="form-line">
 														CPF:
 														<input type="text" class="form-control" id="cpf"
-															name="cpf" value="<%= cpf %>" required>
+															name="cpf" value="<%= cpf %>" required disabled>
 													</div>
 												</div>
 											</div>
@@ -134,7 +134,7 @@
 													<div class="form-line">
 														RG:
 														<input type="text" class="form-control" id="rg"
-															name="rg"  value="<%= rg %>" required>
+															name="rg"  value="<%= rg %>" required disabled>
 													</div>
 												</div>
 											</div>
@@ -143,7 +143,7 @@
 													<div class="form-line">
 														Órgão Expedidor:
 														<input type="text" class="form-control" id="orgao_expedidor"
-															name="orgao_expedidor" value="<%= orgao_expedidor %>" required>
+															name="orgao_expedidor" value="<%= orgao_expedidor %>" required treatment="capitalize">
 													</div>
 												</div>
 											</div>
@@ -229,7 +229,7 @@
 													<div class="form-line">
 														Logradouro:
 														<input type="text" class="form-control" id="logradouro"
-															name="logradouro" value="<%= endereco.logradouro %>" required>
+															name="logradouro" value="<%= endereco.logradouro %>" required treatment="capitalize">
 													</div>
 												</div>
 											</div>
@@ -258,7 +258,7 @@
 													<div class="form-line">
 														Bairro:
 														<input type="text" class="form-control" id="bairro"
-															name="bairro" value="<%= endereco.bairro %>" required>
+															name="bairro" value="<%= endereco.bairro %>" required treatment="capitalize">
 													</div>
 												</div>
 											</div>
@@ -315,7 +315,7 @@
 													<div class="form-line">
 														Escola de Trabalho: <%= console.log(nome_escola) %>
 														<input type="text" class="form-control" id="nome_escola"
-															name="nome_escola" value="<%= nome_escola %>" required>
+															name="nome_escola" value="<%= nome_escola %>" required treatment="capitalize">
 													</div>
 												</div>
 											</div>
@@ -401,7 +401,7 @@
 													<div class="form-line">
 														Disciplina:
 														<input type="text" class="form-control" id="disciplina"
-															name="disciplina" value="<%= disciplina %>" required>
+															name="disciplina" value="<%= disciplina %>" required treatment="capitalize">
 													</div>
 												</div>
 											</div>

@@ -114,6 +114,10 @@
 			}
 		</script>
 
+		<!-- Inclusão de Máscaras Js-->
+	<script src="/js/shopping-crianca-mask.js"></script>
+
+
 	</head>
 
 	<body class="bg-gradient-ligth" onload="verificaOrgao()">
@@ -149,14 +153,14 @@
 													<div class="col-sm-4">
 														Nome: *
 														<input type="text" class="form-control" id="nome" name="nome"
-															required>
+															required treatment="capitalize">
 													</div>
 													<div class="col-sm-4">
 														Nome Social:
 														<!-- <small>(Nome pelo qual você deseja ser conhecido nesta comunidade)</small> -->
 														<input type="text" class="form-control" id="nomesocial"
 															name="nomesocial"
-															title="Nome pelo qual você deseja ser conhecido nesta comunidade">
+															title="Nome pelo qual você deseja ser conhecido nesta comunidade" treatment="capitalize">
 													</div>
 													<div class="col-sm-4">
 														Sexo: *
@@ -249,19 +253,19 @@
 													<div id="div_cargo" class="col-sm-4">
 														Cargo: *
 														<input type="text" class="form-control" id="cargo" name="cargo"
-															required>
+															required treatment="capitalize">
 													</div>
 												</div>
 												<div class="form-group row">
 													<div id="div_funcao" class="col-sm-4">
 														Função:
 														<input type="text" class="form-control" id="funcao"
-															name="funcao">
+															name="funcao" treatment="capitalize">
 													</div>
 													<div id="div_area" class="col-sm-4">
 														Área de atuação: *
 														<input type="text" class="form-control" id="area" name="area"
-															required>
+															required treatment="capitalize">
 													</div>
 													<div id="div_ID" class="col-sm-4">
 														ID:
@@ -273,7 +277,7 @@
 													<div class="col-sm-4">
 														Nome do chefe imediato: *
 														<input type="text" class="form-control" id="chefe" name="chefe"
-															required>
+															required treatment="capitalize">
 													</div>
 
 													<div class="col-sm-8">
@@ -339,7 +343,7 @@
 													<div class="col-sm-4">
 														Logradouro: *
 														<input type="text" class="form-control" id="logradouro"
-															name="logradouro" required>
+															name="logradouro" required treatment="capitalize">
 													</div>
 													<div class="col-sm-4">
 														Número: *
@@ -356,7 +360,7 @@
 													<div class="col-sm-4">
 														Bairro:
 														<input type="text" class="form-control" id="bairro"
-															name="bairro">
+															name="bairro" treatment="capitalize">
 													</div>
 													<div class="col-sm-4">
 														CEP:

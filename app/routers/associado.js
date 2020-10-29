@@ -29,6 +29,10 @@ module.exports = async function (app) {
         if (!req.session.token) {
             res.redirect('/app/login');
         } else {
+            if (NivelUser != 'ADMIN'){
+                res.redirect('/');
+                return false
+            }
             request({
                 url: process.env.API_HOST + rota + "/0/10?sort=nome!asc",
                 method: "GET",
@@ -65,6 +69,10 @@ module.exports = async function (app) {
         if (!req.session.token) {
             res.redirect('/app/login');
         } else {
+            if (NivelUser != 'ADMIN'){
+                res.redirect('/');
+                return false
+            }
             var url;
             if (req.body.busca) {
                 url = process.env.API_HOST + rota + "/cpf/" + req.body.busca + '/' + req.body.page + "/" + req.body.size;
@@ -146,6 +154,10 @@ module.exports = async function (app) {
         if (!req.session.token) {
             res.redirect('/app/login');
         } else {
+            if (NivelUser != 'ADMIN'){
+                res.redirect('/');
+                return false
+            }
             request({
                 url: process.env.API_HOST + "municipio/estado/21",
                 method: "GET",
@@ -284,10 +296,13 @@ module.exports = async function (app) {
     // Rota para exibição da View Editar
     app.get('/app/' + rota + '/edit/:id', function (req, res) {
 
-
         if (!req.session.token) {
             res.redirect('/app/login');
         } else {
+            if (NivelUser != 'ADMIN'){
+                res.redirect('/');
+                return false
+            }
             request({
                 url: process.env.API_HOST + "municipio/estado/21",
                 method: "GET",

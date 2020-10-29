@@ -55,6 +55,9 @@
 		$('#tel_trab').mask('(00) 0000-0000');
 	</script>
 
+	<script>
+		let disabled = '';
+	</script>
 </head>
 
 <body id="theme-teal">	
@@ -188,6 +191,9 @@
 													</div>
 												</div>
 											</div>
+
+											<%if(NivelUser == 'ADMIN') {%>											
+									
 											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
@@ -200,6 +206,8 @@
 													</div>
 												</div>
 											</div>
+											<% } %>
+											
 										</div>
 										<div class="header" style="padding: 20px 20px 20px 0 !important; margin-bottom: 20px;">
 											<h2>Endereço</h2>
@@ -429,6 +437,7 @@
 											</div>
 										</div>
 										<input type="hidden" name="id" id="id" value="<%= id %>">
+										<input type="hidden" id="status" name="status" value="<%= status %>">
 									</div>
 									<div class="footer-card">
 										<input type="submit" value="Salvar"
@@ -444,6 +453,7 @@
 				<!-- /.container-fluid -->
 			</section>
 			<!-- End of Main Content -->
+			<inpu
 
 	<!-- Scroll to Top Button-->
 	<a class="scroll-to-top rounded" href="#page-top">

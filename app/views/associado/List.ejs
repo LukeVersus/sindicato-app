@@ -79,14 +79,18 @@
 											<tr>
 												<th>Nome</th>
 												<th>CPF</th>
+												<%if(NivelUser == 'ADMIN') {%>
 												<th>Ação</th>
+												<% } %>
 											</tr>
 										</thead>
 										<tfoot>
 											<tr>
 												<th>Nome</th>
 												<th>CPF</th>
+												<%if(NivelUser == 'ADMIN') {%>
 												<th>Ação</th>
+												<% } %>
 											</tr>
 										</tfoot>
 										<tbody>
@@ -94,7 +98,8 @@
 											<tr>
 												<td style="text-transform: capitalize"><%= itens[i].nome %></td>
 												<td id="cpf" class="cpf"><%= itens[i].cpf %></td>
-												<td>
+												<%if(NivelUser == 'ADMIN') {%>
+												<td>						
 													<a href="/app/<%= page %>/edit/<%= itens[i].id %>" title="Editar">
 														<i class="material-icons" style="color: orange;">edit</i>
 													</a>
@@ -103,6 +108,7 @@
 													</a>
 	
 												</td>
+												<% } %>
 											</tr>
 											<% } %>
 										</tbody>

@@ -10,6 +10,7 @@ let estados = [];
 let setores = [];
 var moment = require('moment');
 var S = require('string');
+let anexo;
 
 
 module.exports = async function (app) {
@@ -29,11 +30,7 @@ module.exports = async function (app) {
     app.get('/app/' + rota + '/list', function (req, res) {
         if (!req.session.token) {
             res.redirect('/app/login');
-        } else {
-            if (NivelUser != 'ADMIN'){
-                res.redirect('/');
-                return false
-            }
+        } else {    
             request({
                 url: process.env.API_HOST + rota + "/0/10?sort=nome!asc",
                 method: "GET",
@@ -48,6 +45,7 @@ module.exports = async function (app) {
                     const finallista = {
                         id: body.data.content[i].id,
                         nome: body.data.content[i].nome,
+                        anexo: body.data.content[i].anexo_documento,
                         cpf: body.data.content[i].cpf,
                         status: body.data.content[i].status
                     };
@@ -69,11 +67,7 @@ module.exports = async function (app) {
     app.post('/app/' + rota + '/list', function (req, res) {
         if (!req.session.token) {
             res.redirect('/app/login');
-        } else {
-            if (NivelUser != 'ADMIN'){
-                res.redirect('/');
-                return false
-            }
+        } else {           
             var url;
             if (req.body.busca) {
                 url = process.env.API_HOST + rota + "/cpf/" + req.body.busca + '/' + req.body.page + "/" + req.body.size;
@@ -183,6 +177,14 @@ module.exports = async function (app) {
     // Rota para receber parametros via post criar item
     app.post('/app/' + rota + '/create/submit', upload.single('photo'), function (req, res) {
         var datanasc = moment(req.body.datanascimento).toDate();
+
+        const file = req.file;
+            let foto = "";
+            if (file) {
+                const buf = Buffer.from(req.file.buffer);
+                foto = buf.toString('base64');
+            }
+
                
         let cpfTratado = req.body.cpf;
         cpfTratado = S(cpfTratado).replace('.', '').s;
@@ -198,6 +200,7 @@ module.exports = async function (app) {
                 "Authorization": req.session.token
             },
             json: {
+                "anexo": foto,
                 "nome_escola": req.body.nome_escola,
                 "nome": req.body.nome,
                 "orgao_expedidor": req.body.orgao_expedidor,
@@ -292,6 +295,7 @@ module.exports = async function (app) {
                                 id: body.data.id,
                                 nome_escola: body.data.nome_escola,
                                 nome: body.data.nome,
+                                anexo: body.data.anexo_documento,
                                 orgao_expedidor: body.data.orgao_expedidor,
                                 nivel: body.data.nivel,
                                 atividade_funcional: body.data.atividade_funcional,
@@ -347,6 +351,15 @@ module.exports = async function (app) {
 
     // Rota para receber parametros via post editar item
     app.post('/app/' + rota + '/edit/submit', upload.single('photo'), function (req, res) {
+        
+        const file = req.file;
+            let foto = "";
+            if (file) {
+                const buf = Buffer.from(req.file.buffer);
+                foto = buf.toString('base64');
+            }
+
+        
         var cadastrodata = moment.now();
         var datanasc = moment(req.body.datanascimento).toDate();        
         var validacao;
@@ -366,6 +379,7 @@ module.exports = async function (app) {
                 "Authorization": req.session.token
             },
             json: {
+                "anexo": foto,
                 "nome_escola": req.body.nome_escola,
                 "nome": req.body.nome,
                 "id": req.body.id,

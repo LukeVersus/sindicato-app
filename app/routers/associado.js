@@ -9,6 +9,7 @@ let lista = [];
 let estados = [];
 let setores = [];
 var moment = require('moment');
+var S = require('string');
 
 
 module.exports = async function (app) {
@@ -190,10 +191,9 @@ module.exports = async function (app) {
         console.log(req.body);
 
         /*
-        var cpf = req.body.cpf;
-        cpf = cpf.replace('.', '');
-        cpf = cpf.replace('.', '');
-        cpf = cpf.replace('-', '');
+        let cpfTratado = req.body.cpf;
+        cpfTratado = S(cpfTratado).replaceAll('.', '').s;
+        req.body.cpf = S(cpfTratado).replaceAll('-', '').s;
         */
 
         console.log('cpf = ' + req.body.cpf);
@@ -206,6 +206,7 @@ module.exports = async function (app) {
         "atividade_funcional": req.body.atividade_funcional,
         "matricula": req.body.matricula,
         "rg": req.body.rg,
+        //"cpf": cpfTratado, // CPF TRATADO
         "cpf": req.body.cpf,
         "sexo": req.body.sexo,
         "turno": req.body.turno,

@@ -45,7 +45,6 @@ module.exports = async function (app) {
             NomeUser = body.usuario.nome;
             NivelUser = body.usuario.niveis;
             EmailUser = body.usuario.email;
-            NivelUser = body.usuario.niveis;
                         
             if (response.statusCode != 201) {
                 req.flash("danger", body.errors);

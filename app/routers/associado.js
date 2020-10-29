@@ -175,14 +175,53 @@ module.exports = async function (app) {
     // Rota para receber parametros via post criar item
     app.post('/app/' + rota + '/create/submit', function (req, res) {
         var datanasc = moment(req.body.datanascimento).toDate();
-        console.log(req.body.tpEstadoCivil);
         console.log(req.body);
 
-
+        /*
         var cpf = req.body.cpf;
         cpf = cpf.replace('.', '');
         cpf = cpf.replace('.', '');
         cpf = cpf.replace('-', '');
+        */
+
+        console.log('cpf = ' + req.body.cpf);
+
+       json = {
+        "nome_escola": req.body.nome_escola,
+        "nome": req.body.nome,
+        "orgao_expedidor": req.body.orgao_expedidor,
+        "nivel": req.body.nivel,
+        "atividade_funcional": req.body.atividade_funcional,
+        "matricula": req.body.matricula,
+        "rg": req.body.rg,
+        "cpf": req.body.cpf,
+        "sexo": req.body.sexo,
+        "turno": req.body.turno,
+        "endereco": {
+            "logradouro": req.body.logradouro,
+            "numero": req.body.numero,
+            "complemento": req.body.complemento,
+            "bairro": req.body.bairro,
+            "cep": req.body.cep,
+            "tel_res": req.body.tel_res,
+            "tel_cel": req.body.tel_cel,
+            "municipio": {
+                "id": req.body.municipio
+            }
+        },
+        "disciplina": req.body.disciplina,
+        "tpEstadoCivil": req.body.tpEstadoCivil,
+        "tpRedeEnsino": req.body.tpRedeEnsino,
+        "situacao": req.body.situacao,
+        "status": "PRE_CADASTRADO",
+        "validacao": false,
+        "datanascimento": datanasc,
+        "tpEscolaridade": req.body.tpEscolaridade,
+        "faixaSalario": req.body.faixaSalario
+       }
+        
+       console.log(json);
+
         request({
             url: process.env.API_HOST + rota,
             method: "POST",
@@ -199,7 +238,7 @@ module.exports = async function (app) {
                 "atividade_funcional": req.body.atividade_funcional,
                 "matricula": req.body.matricula,
                 "rg": req.body.rg,
-                "cpf": cpf,
+                "cpf": req.body.cpf,
                 "sexo": req.body.sexo,
                 "turno": req.body.turno,
                 "endereco": {

@@ -154,11 +154,7 @@ module.exports = async function (app) {
     app.get('/app/' + rota + '/create', function (req, res) {
         if (!req.session.token) {
             res.redirect('/app/login');
-        } else {
-            if (NivelUser != 'ADMIN'){
-                res.redirect('/');
-                return false
-            }
+        } else {            
             request({
                 url: process.env.API_HOST + "municipio/estado/21",
                 method: "GET",
@@ -167,18 +163,17 @@ module.exports = async function (app) {
                     "content-type": "application/json",
                 },
             }, async function (error, response, body) {
-                estados = [];
+                municipios = [];
                 for (var i = 0; i < Object.keys(body.data).length; i++) {
                     const finalarea = {
                         id: body.data[i].id,
-                        nome: body.data[i].nome,
-                        sigla: body.data[i].sigla
+                        nome: body.data[i].nome
                     };
-                    estados.push(finalarea);
+                    municipios.push(finalarea);
                 }
                 res.format({
                     html: function () {
-                        res.render(rota + '/Create', { itensEstados: estados, page: rota, informacoes: req.session.json });
+                        res.render(rota + '/Create', { itensMunicipios: municipios, page: rota, informacoes: req.session.json });
                     }
                 });
             });
@@ -186,55 +181,14 @@ module.exports = async function (app) {
     });
 
     // Rota para receber parametros via post criar item
-    app.post('/app/' + rota + '/create/submit', function (req, res) {
+    app.post('/app/' + rota + '/create/submit', upload.single('photo'), function (req, res) {
         var datanasc = moment(req.body.datanascimento).toDate();
-        console.log(req.body);
-
-        /*
+               
         let cpfTratado = req.body.cpf;
-        cpfTratado = S(cpfTratado).replaceAll('.', '').s;
-        req.body.cpf = S(cpfTratado).replaceAll('-', '').s;
-        */
-
-        console.log('cpf = ' + req.body.cpf);
-
-       json = {
-        "nome_escola": req.body.nome_escola,
-        "nome": req.body.nome,
-        "orgao_expedidor": req.body.orgao_expedidor,
-        "nivel": req.body.nivel,
-        "atividade_funcional": req.body.atividade_funcional,
-        "matricula": req.body.matricula,
-        "rg": req.body.rg,
-        //"cpf": cpfTratado, // CPF TRATADO
-        "cpf": req.body.cpf,
-        "sexo": req.body.sexo,
-        "turno": req.body.turno,
-        "endereco": {
-            "logradouro": req.body.logradouro,
-            "numero": req.body.numero,
-            "complemento": req.body.complemento,
-            "bairro": req.body.bairro,
-            "cep": req.body.cep,
-            "tel_res": req.body.tel_res,
-            "tel_cel": req.body.tel_cel,
-            "municipio": {
-                "id": req.body.municipio
-            }
-        },
-        "disciplina": req.body.disciplina,
-        "tpEstadoCivil": req.body.tpEstadoCivil,
-        "tpRedeEnsino": req.body.tpRedeEnsino,
-        "situacao": req.body.situacao,
-        "status": "PRE_CADASTRADO",
-        "validacao": false,
-        "datanascimento": datanasc,
-        "tpEscolaridade": req.body.tpEscolaridade,
-        "faixaSalario": req.body.faixaSalario
-       }
+        cpfTratado = S(cpfTratado).replace('.', '').s;
+        cpfTratado = S(cpfTratado).replace('.', '').s;
+        req.body.cpf = S(cpfTratado).replace('-', '').s;
         
-       console.log(json);
-
         request({
             url: process.env.API_HOST + rota,
             method: "POST",
@@ -392,17 +346,17 @@ module.exports = async function (app) {
     });
 
     // Rota para receber parametros via post editar item
-    app.post('/app/' + rota + '/edit/submit', function (req, res) {
+    app.post('/app/' + rota + '/edit/submit', upload.single('photo'), function (req, res) {
         var cadastrodata = moment.now();
-        var datanasc = moment(req.body.datanascimento).toDate();
-        var cpf = req.body.cpf;
+        var datanasc = moment(req.body.datanascimento).toDate();        
         var validacao;
         if(req.body.status == 'APROVAR'){
             validacao = true;
         }
-        cpf = cpf.replace('.', '');
-        cpf = cpf.replace('.', '');
-        cpf = cpf.replace('-', '');
+        let cpfTratado = req.body.cpf;
+        cpfTratado = S(cpfTratado).replace('.', '').s;
+        cpfTratado = S(cpfTratado).replace('.', '').s;
+        req.body.cpf = S(cpfTratado).replace('-', '').s;
         request({
             url: process.env.API_HOST + rota,
             method: "PUT",
@@ -559,17 +513,17 @@ module.exports = async function (app) {
     });
 
     // Rota para receber parametros via post editar item
-    app.post('/app/' + rota + '/edit-pre-cadastro/submit', function (req, res) {
+    app.post('/app/' + rota + '/edit-pre-cadastro/submit', upload.single('photo'), function (req, res) {
         var cadastrodata = moment.now();
-        var datanasc = moment(req.body.datanascimento).toDate();
-        var cpf = req.body.cpf;
+        var datanasc = moment(req.body.datanascimento).toDate();        
         var validacao;
         if(req.body.status == 'APROVAR'){
             validacao = true;
         }
-        cpf = cpf.replace('.', '');
-        cpf = cpf.replace('.', '');
-        cpf = cpf.replace('-', '');
+        let cpfTratado = req.body.cpf;
+        cpfTratado = S(cpfTratado).replace('.', '').s;
+        cpfTratado = S(cpfTratado).replace('.', '').s;
+        req.body.cpf = S(cpfTratado).replace('-', '').s;
         request({
             url: process.env.API_HOST + rota,
             method: "PUT",

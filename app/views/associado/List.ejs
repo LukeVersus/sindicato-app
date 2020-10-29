@@ -68,17 +68,13 @@
 						<div class="card">
 							<!-- Page Heading -->
 							<div class="header">
-								<h2>Listagem de Associados</h2>
-								<a href="/app/<%= page %>/create" style="float: right; margin-top: -20px; margin-right: 10px;">
-									<i class="material-icons" style="color: #4488bd;">add_circle</i>
-								</a>
+								<h2>Listagem de Associados</h2>								
 							</div>
 
 							<div class="body">
 								<div class="table-responsive">
-									<table
-										class="table table-bordered table-striped table-hover js-basic-example dataTable"
-										id="dataTable" width="100%" cellspacing="0">
+									<table class="table table-bordered table-striped table-hover js-basic-example dataTable" 
+									id="dataTable" width="100%" cellspacing="0">
 										<thead>
 											<tr>
 												<th>Nome</th>
@@ -97,7 +93,7 @@
 											<% for (var i = 0; i < itens.length; i++) { %>
 											<tr>
 												<td style="text-transform: capitalize"><%= itens[i].nome %></td>
-												<td><%= itens[i].cpf %></td>
+												<td id="cpf" class="cpf"><%= itens[i].cpf %></td>
 												<td>
 													<a href="/app/<%= page %>/edit/<%= itens[i].id %>" title="Editar">
 														<i class="material-icons" style="color: orange;">edit</i>

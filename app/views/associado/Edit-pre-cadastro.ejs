@@ -49,25 +49,6 @@
 	<script src="/js/shopping-crianca-mask.js"></script>
 
 	<script>
-		function myFunction() {
-			var modalidade = $('#modalidade').val();
-			if (modalidade == 'PRESENCIAL') {
-				var selectCourse = document.getElementById('moodle');
-				selectCourse.style.visibility = 'hidden';
-				var precisadef = document.getElementById('precisadefer');
-				precisadef.style.visibility = 'hidden';
-				$('#course').val('');
-			} else {
-				$('#course').prop('disabled', false);
-				$('#course').prop('required', false);
-				$('#precisadef').prop('disabled', false);
-				var selectCourse = document.getElementById('moodle');
-				selectCourse.style.visibility = 'visible';
-				var precisadef = document.getElementById('precisadefer');
-				precisadef.style.visibility = 'visible';
-			}
-		}
-
 		$('#cpf').mask('000.000.000-00');
 		$('#tel_res').mask('(00) 0000-0000');
 		$('#tel_cel').mask('(00) 00000-0000');

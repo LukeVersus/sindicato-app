@@ -232,10 +232,10 @@
 											<div class="form-line">
 												Município:
 												<select class="form-control" id="municipio" name="municipio">
-													<% for (var i = 0; i < itensEstados.length; i++) { %>
-													<% if (itensEstados[i].id != null ) { %>
-													<option id="estadoid" value="<%- itensEstados[i].id %>">
-														<%- itensEstados[i].nome %>
+													<% for (var i = 0; i < itensMunicipios.length; i++) { %>
+													<% if (itensMunicipios[i].id != null ) { %>
+													<option id="municipio" name="municipio" value="<%- itensMunicipios[i].id %>">
+														<%- itensMunicipios[i].nome %>
 													</option>
 													<% } %>
 													<% } %>
@@ -268,10 +268,10 @@
 												Município de Lotação:
 												<select class="form-control" id="municipio_lotacao"
 													name="municipio_lotacao">
-													<% for (var i = 0; i < itensEstados.length; i++) { %>
-													<% if (itensEstados[i].id != null ) { %>
-													<option id="estadoid" value="<%- itensEstados[i].id %>">
-														<%- itensEstados[i].nome %>
+													<% for (var i = 0; i < itensMunicipios.length; i++) { %>
+													<% if (itensMunicipios[i].id != null ) { %>
+													<option id="municipio_lotacao" name="municipio_lotacao" value="<%- itensMunicipios[i].id %>">
+														<%- itensMunicipios[i].nome %>
 													</option>
 													<% } %>
 													<% } %>

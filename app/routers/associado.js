@@ -175,7 +175,7 @@ module.exports = async function (app) {
     });
 
     // Rota para receber parametros via post criar item
-    app.post('/app/' + rota + '/create/submit', upload.single('photo'), function (req, res) {
+    app.post('/app/' + rota + '/create/submit', upload.single('file'), function (req, res) {
         var datanasc = moment(req.body.datanascimento).toDate();
 
         const file = req.file;
@@ -350,7 +350,7 @@ module.exports = async function (app) {
     });
 
     // Rota para receber parametros via post editar item
-    app.post('/app/' + rota + '/edit/submit', upload.single('photo'), function (req, res) {
+    app.post('/app/' + rota + '/edit/submit', upload.single('file'), function (req, res) {
         
         const file = req.file;
             let foto = "";
@@ -389,7 +389,7 @@ module.exports = async function (app) {
                 "area": req.body.area,
                 "matricula": req.body.matricula,
                 "rg": req.body.rg,
-                "cpf": cpf,
+                "cpf": req.body.cpf,
                 "sexo": req.body.sexo,
                 "turno": req.body.turno,
                 "endereco": {
@@ -534,6 +534,47 @@ module.exports = async function (app) {
         if(req.body.status == 'APROVAR'){
             validacao = true;
         }
+
+        json = {
+            "nome_escola": req.body.nome_escola,
+            "nome": req.body.nome,
+            "id": req.body.id,
+            "orgao_expedidor": req.body.orgao_expedidor,
+            "nivel": req.body.nivel,
+            "atividade_funcional": req.body.atividade_funcional,
+            "area": req.body.area,
+            "matricula": req.body.matricula,
+            "rg": req.body.rg,
+            "cpf": req.body.cpf,
+            "sexo": req.body.sexo,
+            "turno": req.body.turno,
+            "endereco": {
+                "logradouro": req.body.logradouro,
+                "numero": req.body.numero,
+                "complemento": req.body.complemento,
+                "bairro": req.body.bairro,
+                "cep": req.body.cep,
+                "tel_res": req.body.tel_res,
+                "tel_cel": req.body.tel_cel,
+                "municipio": {
+                    "id": req.body.municipio
+                }
+            },
+            "disciplina": req.body.disciplina,
+            "tpEstadoCivil": req.body.tpEstadoCivil,
+            "tpRedeEnsino": req.body.tpRedeEnsino,
+            "situacao": req.body.situacao,
+            "status": req.body.status,
+            "validacao": validacao,
+            "datanascimento": datanasc,
+            "tpEscolaridade": req.body.tpEscolaridade,
+            "faixaSalario": req.body.faixaSalario,
+            "celular": req.body.celular
+
+        };
+
+        console.log(json);
+
         let cpfTratado = req.body.cpf;
         cpfTratado = S(cpfTratado).replace('.', '').s;
         cpfTratado = S(cpfTratado).replace('.', '').s;
@@ -556,7 +597,7 @@ module.exports = async function (app) {
                 "area": req.body.area,
                 "matricula": req.body.matricula,
                 "rg": req.body.rg,
-                "cpf": cpf,
+                "cpf": req.body.cpf,
                 "sexo": req.body.sexo,
                 "turno": req.body.turno,
                 "endereco": {

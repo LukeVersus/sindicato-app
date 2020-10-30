@@ -3,11 +3,15 @@ const request = require('request');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const rota = require('path').basename(__filename, '.js');
+const base64Img = require('base64-img');
+const fs = require('fs');
 var multer = require('multer');
 var upload = multer();
+
 let lista = [];
 let estados = [];
 let setores = [];
+let documento;
 var moment = require('moment');
 var S = require('string');
 let anexo;
@@ -181,10 +185,10 @@ module.exports = async function (app) {
         var datanasc = moment(req.body.datanascimento).toDate();
 
         const file = req.file;
-            let foto = "";
+            let doc = "";
             if (file) {
                 const buf = Buffer.from(req.file.buffer);
-                foto = buf.toString('base64');
+                doc = buf.toString('base64');
             }
 
                
@@ -202,7 +206,7 @@ module.exports = async function (app) {
                 "Authorization": req.session.token
             },
             json: {
-                "anexo": foto,
+                "anexo": doc,
                 "nome_escola": req.body.nome_escola,
                 "nome": req.body.nome,
                 "orgao_expedidor": req.body.orgao_expedidor,
@@ -356,14 +360,14 @@ module.exports = async function (app) {
     app.post('/app/' + rota + '/edit/submit', upload.single('file'), function (req, res) {
         
         const file = req.file;
-            let foto = "";
+            let doc = "";
             if (file) {
                 const buf = Buffer.from(req.file.buffer);
-                foto = buf.toString('base64');
+                doc = buf.toString('base64');
             }
 
         json = {
-            "anexo": foto,
+            "anexo": doc,
             "nome_escola": req.body.nome_escola,
             "nome": req.body.nome,
             "id": req.body.id,
@@ -422,7 +426,7 @@ module.exports = async function (app) {
                 "Authorization": req.session.token
             },
             json: {
-                "anexo": foto,
+                "anexo": doc,
                 "nome_escola": req.body.nome_escola,
                 "nome": req.body.nome,
                 "id": req.body.id,

@@ -29,7 +29,10 @@ app.get('/', (req, res) => {
     } else {
         res.format({
             html: function () {
-                res.render('template/index', {informacoes: req.session.json});
+                res.render('template/index', { IdUser: req.session.IdUser,
+                    NomeUser: req.session.NomeUser,
+                    NivelUser: req.session.NivelUser,
+                    EmailUser: req.session.EmailUser, informacoes: req.session.json});
             }
         });
     }

@@ -5,6 +5,8 @@ const session = require('express-session');
 const rota = require('path').basename(__filename, '.js');
 const base64Img = require('base64-img');
 const fs = require('fs');
+const path = require('path');
+var base64 = require('file-base64');
 var multer = require('multer');
 var upload = multer();
 
@@ -60,7 +62,10 @@ module.exports = async function (app) {
                 }
                 res.format({
                     html: function () {
-                        res.render(rota + '/List', { itens: lista, page: rota, informacoes: req.session.json, number: body.data.number, totalPages: body.data.totalPages});
+                        res.render(rota + '/List', { itens: lista, page: rota, IdUser: req.session.IdUser,
+                            NomeUser: req.session.NomeUser,
+                            NivelUser: req.session.NivelUser,
+                            EmailUser: req.session.EmailUser, informacoes: req.session.json, number: body.data.number, totalPages: body.data.totalPages});
                     }
                 });
                 return lista;
@@ -141,7 +146,10 @@ module.exports = async function (app) {
                 }
                 res.format({
                     html: function () {
-                        res.render(rota + '/Pre-cadastro', { itensDois: lista, page: rota, informacoes: req.session.json, number: body.data.number, totalPages: body.data.totalPages, });
+                        res.render(rota + '/Pre-cadastro', { itensDois: lista, page: rota, IdUser: req.session.IdUser,
+                            NomeUser: req.session.NomeUser,
+                            NivelUser: req.session.NivelUser,
+                            EmailUser: req.session.EmailUser, informacoes: req.session.json, number: body.data.number, totalPages: body.data.totalPages, });
                     }
                 });
                 return lista;
@@ -173,7 +181,10 @@ module.exports = async function (app) {
                 }
                 res.format({
                     html: function () {
-                        res.render(rota + '/Create', { itensMunicipios: municipios, page: rota, informacoes: req.session.json });
+                        res.render(rota + '/Create', { itensMunicipios: municipios, page: rota, IdUser: req.session.IdUser,
+                            NomeUser: req.session.NomeUser,
+                            NivelUser: req.session.NivelUser,
+                            EmailUser: req.session.EmailUser, informacoes: req.session.json });
                     }
                 });
             });
@@ -185,11 +196,11 @@ module.exports = async function (app) {
         var datanasc = moment(req.body.datanascimento).toDate();
 
         const file = req.file;
-            let doc = "";
-            if (file) {
-                const buf = Buffer.from(req.file.buffer);
-                doc = buf.toString('base64');
-            }
+        let doc = "";
+        if (file) {
+            const buf = Buffer.from(req.file.buffer);
+            doc = buf.toString('base64');
+        }
 
                
         let cpfTratado = req.body.cpf;
@@ -206,7 +217,7 @@ module.exports = async function (app) {
                 "Authorization": req.session.token
             },
             json: {
-                "anexo": doc,
+                "anexo_documento": doc,
                 "nome_escola": req.body.nome_escola,
                 "nome": req.body.nome,
                 "orgao_expedidor": req.body.orgao_expedidor,
@@ -260,14 +271,11 @@ module.exports = async function (app) {
 
     // Rota para exibição da View Editar
     app.get('/app/' + rota + '/edit/:id', function (req, res) {
-
+        
         if (!req.session.token) {
             res.redirect('/app/login');
         } else {
-            if (NivelUser != 'ADMIN'){
-                res.redirect('/');
-                return false
-            }
+            
             request({
                 url: process.env.API_HOST + "municipio/estado/21",
                 method: "GET",
@@ -345,7 +353,11 @@ module.exports = async function (app) {
                                 tpEscolaridade: body.data.tpEscolaridade,
                                 faixaSalario: body.data.faixaSalario,
                                 celular: body.data.celular,
-                                page: rota,
+                                page: rota, 
+                                IdUser: req.session.IdUser,
+                                NomeUser: req.session.NomeUser,
+                                NivelUser: req.session.NivelUser,
+                                EmailUser: req.session.EmailUser,
                                 informacoes: req.session.json,
                                 itensEstados: estados
                             });
@@ -360,53 +372,12 @@ module.exports = async function (app) {
     app.post('/app/' + rota + '/edit/submit', upload.single('file'), function (req, res) {
         
         const file = req.file;
-            let doc = "";
-            if (file) {
-                const buf = Buffer.from(req.file.buffer);
-                doc = buf.toString('base64');
-            }
+        let doc = "";
+        if (file) {
+            const buf = Buffer.from(req.file.buffer);
+            doc = buf.toString('base64');
+        }
 
-        json = {
-            "anexo": doc,
-            "nome_escola": req.body.nome_escola,
-            "nome": req.body.nome,
-            "id": req.body.id,
-            "orgao_expedidor": req.body.orgao_expedidor,
-            "nivel": req.body.nivel,
-            "atividade_funcional": req.body.atividade_funcional,
-            "area": req.body.area,
-            "matricula": req.body.matricula,
-            "rg": req.body.rg,
-            "cpf": req.body.cpf,
-            "sexo": req.body.sexo,
-            "turno": req.body.turno,
-            "endereco": {
-                "logradouro": req.body.logradouro,
-                "numero": req.body.numero,
-                "complemento": req.body.complemento,
-                "bairro": req.body.bairro,
-                "cep": req.body.cep,
-                "tel_res": req.body.tel_res,
-                "tel_cel": req.body.tel_cel,
-                "municipio": {
-                    "id": req.body.municipio
-                }
-            },
-            "disciplina": req.body.disciplina,
-            "tpEstadoCivil": req.body.tpEstadoCivil,
-            "tpRedeEnsino": req.body.tpRedeEnsino,
-            "situacao": req.body.situacao,
-            "status": req.body.status,
-            "validacao": validacao,
-            "datanascimento": datanasc,
-            "tpEscolaridade": req.body.tpEscolaridade,
-            "faixaSalario": req.body.faixaSalario,
-            "celular": req.body.celular
-
-        };
-
-        console.log(json);
-        
         var cadastrodata = moment.now();
         var datanasc = moment(req.body.datanascimento).toDate();        
         var validacao;
@@ -426,7 +397,7 @@ module.exports = async function (app) {
                 "Authorization": req.session.token
             },
             json: {
-                "anexo": doc,
+                "anexo_documento": doc,
                 "nome_escola": req.body.nome_escola,
                 "nome": req.body.nome,
                 "id": req.body.id,
@@ -563,6 +534,10 @@ module.exports = async function (app) {
                                 faixaSalario: body.data.faixaSalario,                                
                                 celular: body.data.celular,
                                 page: rota,
+                                IdUser: req.session.IdUser,
+                                NomeUser: req.session.NomeUser,
+                                NivelUser: req.session.NivelUser,
+                                EmailUser: req.session.EmailUser,
                                 informacoes: req.session.json,
                                 itensEstados: estados
                             });
@@ -753,7 +728,10 @@ module.exports = async function (app) {
         } else {
             res.format({
                 html: function () {
-                    res.render(rota + '/Alterar-Senha', { informacoes: req.session.json, page: rota });
+                    res.render(rota + '/Alterar-Senha', { IdUser: req.session.IdUser,
+                        NomeUser: req.session.NomeUser,
+                        NivelUser: req.session.NivelUser,
+                        EmailUser: req.session.EmailUser, informacoes: req.session.json, page: rota });
                 }
             });
 

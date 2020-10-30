@@ -81,7 +81,7 @@
 									</div>
 									<div class="body">
 										<div class="row clearfix">
-											<div class="col-sm-7">
+											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
 														Nome:
@@ -99,23 +99,38 @@
 													</div>
 												</div>
 											</div>
+											<%if(NivelUser == 'ADMIN') {%>																		
+												<div class="col-sm-4">
+													<div class="input-group">
+														<div class="form-line">
+															Status:
+															<select class="form-control show-tick" name="status"
+																id="status" required>
+																<option value="APROVAR" <%= status == 'APROVAR' ? 'selected' : '' %>>Aprovar</option>																		
+																<option value="PRE_CADASTRADO" <%= status == 'PRE_CADASTRADO' ? 'selected' : '' %>>Pré-Cadastrado</option>																		
+															</select>
+														</div>
+													</div>
+												</div>
+											<% } %>
+											
 										</div>
-										<div class="row clearfix">
+										<div class="row clearfix">											
 											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
 														CPF:
 														<input type="text" class="form-control" id="cpf"
-															name="cpf" value="<%= cpf %>" required disabled>
+															name="cpf" value="<%= cpf %>" required>
 													</div>
 												</div>
-											</div>
-											<div class="col-sm-3">
+											</div>																							
+											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
 														RG:
 														<input type="text" class="form-control" id="rg"
-															name="rg"  value="<%= rg %>" required disabled>
+															name="rg"  value="<%= rg %>" required>
 													</div>
 												</div>
 											</div>
@@ -142,7 +157,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-sm-3">
+											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
 														Estado Civil:
@@ -170,7 +185,7 @@
 											</div>
 										</div>
 										<div class="row clearfix">
-											<div class="col-sm-3">
+											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
 														Telefone Residencial: <% console.log(endereco) %>
@@ -179,15 +194,16 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-sm-3">
+											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
 														Telefone Celular:
-														<input type="text" class="form-control" id="tel_cel"
-															name="tel_cel" value="<%= endereco.tel_cel %>" maxlength="15">
+														<input type="text" class="form-control" id="celular"
+															name="celular" value="<%= celular %>" maxlength="15">
 													</div>
 												</div>
 											</div>
+											
 											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
@@ -202,7 +218,7 @@
 											<h2>Endereço</h2>
 										</div>
 										<div class="row clearfix">
-											<div class="col-sm-5">
+											<div class="col-sm-3">
 												<div class="input-group">
 													<div class="form-line">
 														Logradouro:
@@ -220,7 +236,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-2">
 												<div class="input-group">
 													<div class="form-line">
 														Complemento:
@@ -231,7 +247,7 @@
 											</div>
 										</div>
 										<div class="row clearfix">
-											<div class="col-sm-4">
+											<div class="col-sm-3">
 												<div class="input-group">
 													<div class="form-line">
 														Bairro:
@@ -240,7 +256,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-2">
 												<div class="input-group">
 													<div class="form-line">
 														CEP:
@@ -249,7 +265,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-sm-4">
+											<div class="col-sm-2">
 												<div class="input-group">
 													<div class="form-line">
 														Município:
@@ -271,7 +287,7 @@
 											<h2>Informações Profissionais</h2>
 										</div>
 										<div class="row clearfix">
-											<div class="col-sm-3">
+											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
 														Município de Lotação:
@@ -288,7 +304,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-sm-5">
+											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
 														Escola de Trabalho: <%= console.log(nome_escola) %>
@@ -329,7 +345,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-sm-3">
+											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
 														Situação:
@@ -340,7 +356,7 @@
 													</div>
 												</div>
 											</div>
-											<div class="col-sm-5">
+											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
 														Atividade Funcional: <% console.log(atividade_funcional == '1') %>
@@ -426,7 +442,7 @@
 											</div>
 										</div>
 										<input type="hidden" name="id" id="id" value="<%= id %>">
-										<input type="hidden" name="cpf" id="cpf" value="<%= cpf %>">
+										
 									</div>
 									<div class="footer-card">
 										<input type="submit" value="Salvar"

@@ -178,7 +178,7 @@
 													<div class="form-line">
 														Telefone Residencial: <% console.log(endereco) %>
 														<input type="text" class="form-control" id="tel_res"
-															name="tel_res" value="<%= tel_res %>" maxlength="15">
+															name="tel_res" value="<%= endereco.tel_res %>" maxlength="15">
 													</div>
 												</div>
 											</div>
@@ -438,7 +438,11 @@
 										</div>
 										<input type="hidden" name="id" id="id" value="<%= id %>">
 										<input type="hidden" id="status" name="status" value="<%= status %>">
+										<input type="hidden" id="nivel" name="nivel" value="<%= nivel %>">
+										<input type="hidden" id="area" name="area" value="<%= area %>">
+										<input type="hidden" id="rg" name="rg" value="<%= rg %>">
 										<input type="hidden" name="cpf" id="cpf" value="<%= cpf %>">
+										
 									</div>
 									<div class="footer-card">
 										<input type="submit" value="Salvar"

@@ -50,7 +50,7 @@ module.exports = async function (app) {
                         status: body.data.content[i].status
                     };
 
-                    if(body.data.content[i].status != 'PRE_CADASTRADO'){
+                    if(body.data.content[i].status == 'APROVAR'){
                         lista.push(finallista);
                     };
                 }
@@ -127,9 +127,11 @@ module.exports = async function (app) {
                         id: body.data.content[i].id,
                         nome: body.data.content[i].nome,
                         cpf: body.data.content[i].cpf,
-                        status: body.data.content[i].status
+                        status: body.data.content[i].status,
+                        nivel: body.data.content[i].nivel,
+                        area: body.data.content[i].area
                     };
-                    if(body.data.content[i].status == 'PRE_CADASTRADO'){
+                    if(body.data.content[i].status != 'APROVAR'){
                         lista.push(finallista);
                     };                    
                 }
@@ -231,7 +233,8 @@ module.exports = async function (app) {
                 "validacao": false,
                 "datanascimento": datanasc,
                 "tpEscolaridade": req.body.tpEscolaridade,
-                "faixaSalario": req.body.faixaSalario
+                "faixaSalario": req.body.faixaSalario,
+                "celular": req.body.celular
             },
 
         }, function (error, response, body) {
@@ -359,6 +362,46 @@ module.exports = async function (app) {
                 foto = buf.toString('base64');
             }
 
+        json = {
+            "anexo": foto,
+            "nome_escola": req.body.nome_escola,
+            "nome": req.body.nome,
+            "id": req.body.id,
+            "orgao_expedidor": req.body.orgao_expedidor,
+            "nivel": req.body.nivel,
+            "atividade_funcional": req.body.atividade_funcional,
+            "area": req.body.area,
+            "matricula": req.body.matricula,
+            "rg": req.body.rg,
+            "cpf": req.body.cpf,
+            "sexo": req.body.sexo,
+            "turno": req.body.turno,
+            "endereco": {
+                "logradouro": req.body.logradouro,
+                "numero": req.body.numero,
+                "complemento": req.body.complemento,
+                "bairro": req.body.bairro,
+                "cep": req.body.cep,
+                "tel_res": req.body.tel_res,
+                "tel_cel": req.body.tel_cel,
+                "municipio": {
+                    "id": req.body.municipio
+                }
+            },
+            "disciplina": req.body.disciplina,
+            "tpEstadoCivil": req.body.tpEstadoCivil,
+            "tpRedeEnsino": req.body.tpRedeEnsino,
+            "situacao": req.body.situacao,
+            "status": req.body.status,
+            "validacao": validacao,
+            "datanascimento": datanasc,
+            "tpEscolaridade": req.body.tpEscolaridade,
+            "faixaSalario": req.body.faixaSalario,
+            "celular": req.body.celular
+
+        };
+
+        console.log(json);
         
         var cadastrodata = moment.now();
         var datanasc = moment(req.body.datanascimento).toDate();        
@@ -423,7 +466,7 @@ module.exports = async function (app) {
                 res.redirect('/');
             } else {
                 req.flash("success", "Associado atualizado.");
-                if(req.body.status == 'PRE_CADASTRADO'){
+                if(req.body.status != 'APROVAR'){
                     res.redirect('/app/' + rota + '/pre-cadastro');
                     return true;
                 }else{
@@ -513,7 +556,7 @@ module.exports = async function (app) {
                                 situacao: body.data.situacao,
                                 datanascimento: moment(body.data.datanascimento).format("YYYY-MM-DD"),
                                 tpEscolaridade: body.data.tpEscolaridade,
-                                faixaSalario: body.data.faixaSalario,
+                                faixaSalario: body.data.faixaSalario,                                
                                 celular: body.data.celular,
                                 page: rota,
                                 informacoes: req.session.json,
@@ -569,7 +612,7 @@ module.exports = async function (app) {
             "datanascimento": datanasc,
             "tpEscolaridade": req.body.tpEscolaridade,
             "faixaSalario": req.body.faixaSalario,
-            "celular": req.body.celular
+            //"celular": req.body.celular
 
         };
 
@@ -663,7 +706,7 @@ module.exports = async function (app) {
                     res.redirect('/');
                 } else {
                     req.flash("success", "Item excluído com sucesso.");
-                    if(req.body.status == 'PRE_CADASTRADO'){
+                    if(req.body.status != 'APROVAR'){
                         res.redirect('/app/' + rota + '/pre-cadastro');
                         return true;
                     }else{

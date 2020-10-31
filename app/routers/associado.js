@@ -770,5 +770,31 @@ module.exports = async function (app) {
         }
     });
 
+    app.get('/app/' + rota + '/doc/:id', function (req, res) {
+        if (!req.session.token) {
+            res.redirect('/app/login');
+        } else {
+            request({
+                url: process.env.API_HOST + rota + "/" + req.params.id,
+                method: "GET",
+                json: true,
+                headers: {
+                    "content-type": "application/json",
+                    "Authorization": req.session.token
+                },
+            }, function (error, response, body) {
+             /*   if (response.statusCode != 200) {
+                    req.flash("danger", "Item não impresso. " + body.errors);
+                } else {
+                    req.flash("success", "Item impresso com sucesso.");
+                } */
+
+                res.json({anexo_documento: body.data.anexo_documento});    
+            });
+            
+        }
+    });
+
+
 
 }

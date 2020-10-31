@@ -47,6 +47,25 @@
 			document.getElementById('campo').value = valor;
 		}
 	</script>
+	<script>
+		function getpdf(id) {
+			$.ajax({
+				type: "GET",
+				url: "/app/associado/doc/" + id,
+				success: function (data) {
+					let pdfWindow = window.open("");
+					pdfWindow.document.write("<object width='100%' height='100%' type='application/pdf' data='data:application/pdf;base64, " + data.anexo_documento + "'></object>");
+					pdfWindow.document.title = "Documento";
+					
+				},
+				error: function (XMLHttpRequest, textStatus, errorThrown) {
+					alert('Error occurred while opening fax template'
+						+ getAjaxErrorString(textStatus, errorThrown));
+				}
+			});
+		}
+	</script>
+
 
 </head>
 
@@ -98,17 +117,21 @@
 											<tr>
 												<td style="text-transform: capitalize"><%= itens[i].nome %></td>
 												<td id="cpf" class="cpf"><%= itens[i].cpf %></td>
-												<%if(NivelUser == 'ADMIN') {%>
-												<td>						
+												
+												<td>
+													<a href="javascript:void(0)" onclick="getpdf('<%= itens[i].id %>')" data-toggle="modal" data-toggle-alt="tooltip" data-placement="bottom" title="" data-original-title="Baixar Documento">
+														<i class="material-icons" style="color: brown;">get_app</i>
+													</a>
+													<%if(NivelUser == 'ADMIN') {%>						
 													<a href="/app/<%= page %>/edit/<%= itens[i].id %>" title="Editar">
 														<i class="material-icons" style="color: orange;">edit</i>
 													</a>
 													<a href="" data-toggle="modal" data-target="#logoutModal" onclick="setaDadosModal('<%= itens[i].id %>')" title="Excluir">
 														<i class="material-icons" style="color: red;">delete</i>
 													</a>
-	
+													<% } %>
 												</td>
-												<% } %>
+												
 											</tr>
 											<% } %>
 										</tbody>

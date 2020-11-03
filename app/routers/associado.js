@@ -36,7 +36,7 @@ module.exports = async function (app) {
     app.get('/app/' + rota + '/list', function (req, res) {
         if (!req.session.token) {
             res.redirect('/app/login');
-        } else {    
+        } else {              
             request({
                 url: process.env.API_HOST + rota + "/0/10?sort=nome!asc",
                 method: "GET",
@@ -154,6 +154,50 @@ module.exports = async function (app) {
                 });
                 return lista;
             });
+        }
+    });
+    app.post('/app/' + rota + '/pre-cadastro', function (req, res) {
+        if (!req.session.token) {
+            res.redirect('/app/login');
+        } else {           
+            var url;
+            if (req.body.busca) {
+                url = process.env.API_HOST + rota + "/cpf/" + req.body.busca + '/' + req.body.page + "/" + req.body.size;
+            } else {
+                url = process.env.API_HOST + rota + "/" + req.body.page + "/" + req.body.size + "?sort=nome!asc";
+            }
+            request({
+                url: url,
+                method: "GET",
+                json: true,
+                headers: {
+                    "content-type": "application/json",
+                    "Authorization": req.session.token
+                },
+            }, function (error, response, body) {
+                lista = [];
+                for (var i = 0; i < Object.keys(body.data.content).length; i++) {
+                    const finallista = {
+                        id: body.data.content[i].id,
+                        nome: body.data.content[i].nome,
+                        cpf: body.data.content[i].cpf,
+                        status: body.data.content[i].status,
+                        nivel: body.data.content[i].nivel,
+                        area: body.data.content[i].area
+                    };
+                    lista.push(finallista);
+                }
+
+                return res.json({
+                    itensDois: lista,
+                    page: rota,
+                    informacoes: req.session.json,
+                    number: body.data.number,
+                    totalPages: body.data.totalPages
+                });
+
+            });
+
         }
     });
 

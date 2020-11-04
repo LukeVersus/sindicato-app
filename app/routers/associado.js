@@ -294,7 +294,8 @@ module.exports = async function (app) {
                 "datanascimento": datanasc,
                 "tpEscolaridade": req.body.tpEscolaridade,
                 "faixaSalario": req.body.faixaSalario,
-                "celular": req.body.celular
+                "celular": req.body.celular,
+                "municipio_lotacao": req.body.municipio_lotacao
             },
 
         }, function (error, response, body) {
@@ -374,8 +375,7 @@ module.exports = async function (app) {
                                     bairro: body.data.endereco != null ? body.data.endereco.bairro : null,
                                     cep: body.data.endereco != null ? body.data.endereco.cep : null,
                                     tel_res: body.data.endereco != null ? body.data.endereco.tel_res : null,
-                                    tel_cel: body.data.endereco != null ? body.data.endereco.tel_cel : null,
-                                    //municipio: body.data.endereco.municipio.id,
+                                    tel_cel: body.data.endereco != null ? body.data.endereco.tel_cel : null,                                    
                                     /*
                                     municipio: {
     
@@ -389,6 +389,8 @@ module.exports = async function (app) {
                                     }
                                     */
                                 },
+                                municipio: body.data.endereco.municipio.id,
+                                municipio_lotacao: body.data.municipio_lotacao,
                                 usuario: body.data.usuario != null ? body.data.usuario.id : null,
                                 disciplina: body.data.disciplina,
                                 tpEstadoCivil: body.data.tpEstadoCivil,
@@ -476,8 +478,8 @@ module.exports = async function (app) {
                 "datanascimento": datanasc,
                 "tpEscolaridade": req.body.tpEscolaridade,
                 "faixaSalario": req.body.faixaSalario,
-                "celular": req.body.celular
-
+                "celular": req.body.celular,
+                "municipio_lotacao": req.body.municipio_lotacao
             },
 
         }, function (error, response, body) {
@@ -555,7 +557,7 @@ module.exports = async function (app) {
                                     cep: body.data.endereco != null ? body.data.endereco.cep : null,
                                     tel_res: body.data.endereco != null ? body.data.endereco.tel_res : null,
                                     tel_cel: body.data.endereco != null ? body.data.endereco.tel_cel : null,
-                                    //municipio: body.data.endereco.municipio.id,
+                                    municipio: body.data.endereco.municipio.id,
                                     /*
                                     municipio: {
     
@@ -601,47 +603,6 @@ module.exports = async function (app) {
         if(req.body.status == 'APROVAR'){
             validacao = true;
         }
-
-        json = {
-            "nome_escola": req.body.nome_escola,
-            "nome": req.body.nome,
-            "id": req.body.id,
-            "orgao_expedidor": req.body.orgao_expedidor,
-            "nivel": req.body.nivel,
-            "atividade_funcional": req.body.atividade_funcional,
-            "area": req.body.area,
-            "matricula": req.body.matricula,
-            "rg": req.body.rg,
-            "cpf": req.body.cpf,
-            "sexo": req.body.sexo,
-            "turno": req.body.turno,
-            "endereco": {
-                "logradouro": req.body.logradouro,
-                "numero": req.body.numero,
-                "complemento": req.body.complemento,
-                "bairro": req.body.bairro,
-                "cep": req.body.cep,
-                "tel_res": req.body.tel_res,
-                "tel_cel": req.body.tel_cel,
-                "municipio": {
-                    "id": req.body.municipio
-                }
-            },
-            "disciplina": req.body.disciplina,
-            "tpEstadoCivil": req.body.tpEstadoCivil,
-            "tpRedeEnsino": req.body.tpRedeEnsino,
-            "situacao": req.body.situacao,
-            "status": req.body.status,
-            "validacao": validacao,
-            "datanascimento": datanasc,
-            "tpEscolaridade": req.body.tpEscolaridade,
-            "faixaSalario": req.body.faixaSalario,
-            //"celular": req.body.celular
-
-        };
-
-        console.log(json);
-
         let cpfTratado = req.body.cpf;
         cpfTratado = S(cpfTratado).replace('.', '').s;
         cpfTratado = S(cpfTratado).replace('.', '').s;
@@ -688,8 +649,8 @@ module.exports = async function (app) {
                 "datanascimento": datanasc,
                 "tpEscolaridade": req.body.tpEscolaridade,
                 "faixaSalario": req.body.faixaSalario,
-                "celular": req.body.celular
-
+                "celular": req.body.celular,
+                "municipio_lotacao": req.body.municipio_lotacao
             },
 
         }, function (error, response, body) {

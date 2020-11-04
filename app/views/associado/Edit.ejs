@@ -273,7 +273,7 @@
 																name="municipio">
 																<% for (var i = 0; i < itensEstados.length; i++) { %>
 																<% if (itensEstados[i].id != null ) { %>
-																	<option id="estadoid" value="<%- itensEstados[i].id %>" <%= municipio == '<%= itensEstados[i].id %>' ? 'selected' : '' %>>
+																	<option id="estadoid" value="<%= itensEstados[i].id %>">
 																	<%- itensEstados[i].nome %>
 																</option>
 																<% } %>
@@ -295,7 +295,7 @@
 															name="municipio_lotacao">
 															<% for (var i = 0; i < itensEstados.length; i++) { %>
 															<% if (itensEstados[i].id != null ) { %>
-															<option id="estadoid" value="<%- itensEstados[i].id %>" <%= municipio_lotacao == '<%= itensEstados[i].id %>' ? 'selected' : '' %>>
+															<option id="estadoid" value="<%= itensEstados[i].id %>">
 																<%- itensEstados[i].nome %>
 															</option>
 															<% } %>
@@ -307,7 +307,7 @@
 											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
-														Escola de Trabalho: <%= console.log(nome_escola) %>
+														Escola de Trabalho: 
 														<input type="text" class="form-control" id="nome_escola"
 															name="nome_escola" value="<%= nome_escola %>" required treatment="capitalize">
 													</div>
@@ -486,6 +486,8 @@
 
 	<script>
 		$('.toast').toast('show');
+		$('#municipio option[value=<%= municipio %>]').attr('selected','selected');
+		$('#municipio_lotacao option[value=<%= municipio_lotacao %>]').attr('selected','selected');
 	</script>
 	<!-- Jquery Core Js -->
 	<script src="/js/plugins/jquery/jquery.min.js"></script>

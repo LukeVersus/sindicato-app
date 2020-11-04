@@ -107,7 +107,8 @@
 															<select class="form-control show-tick" name="status"
 																id="status" required>
 																<option value="APROVAR" <%= status == 'APROVAR' ? 'selected' : '' %>>Aprovar</option>																		
-																<option value="PRE_CADASTRADO" <%= status == 'PRE_CADASTRADO' ? 'selected' : '' %>>Pré-Cadastrado</option>																		
+																<option value="PRE_CADASTRADO" <%= status == 'PRE_CADASTRADO' ? 'selected' : '' %>>Pré-Cadastrado</option>
+																<option value="AGUARDAR_DOCUMENTOS" <%= status == 'AGUARDAR_DOCUMENTOS' ? 'selected' : '' %>>Aguardando Documentos</option>																		
 															</select>
 														</div>
 													</div>
@@ -210,6 +211,8 @@
 														Anexo de Documento:
 														<input type="file" class="form-control" id="file" name="file"
 														value="<%= anexo %>">
+														<input type="hidden" class="form-control" id="file" name="file"
+														value="<%= anexo %>">														
 													</div>
 												</div>
 											</div>											

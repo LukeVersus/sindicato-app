@@ -268,7 +268,7 @@
 																name="municipio">
 																<% for (var i = 0; i < itensEstados.length; i++) { %>
 																<% if (itensEstados[i].id != null ) { %>
-																<option id="estadoid" value="<%- itensEstados[i].id %>" <%= municipio == '<%- itensEstados[i].id %>' ? 'selected' : '' %>>
+																<option id="estadoid" value="<%- itensEstados[i].id %>" <%= municipio == '<%= itensEstados[i].id %>' ? 'selected' : '' %>>
 																	<%- itensEstados[i].nome %>
 																</option>
 																<% } %>
@@ -290,7 +290,7 @@
 															name="municipio_lotacao">
 															<% for (var i = 0; i < itensEstados.length; i++) { %>
 															<% if (itensEstados[i].id != null ) { %>
-															<option id="estadoid" value="<%- itensEstados[i].id %>" <%= municipio_lotacao == '<%- itensEstados[i].id %>' ? 'selected' : '' %>>
+															<option id="estadoid" value="<%- itensEstados[i].id %>" <%= municipio_lotacao == '<%= itensEstados[i].id %>' ? 'selected' : '' %>>
 																<%- itensEstados[i].nome %>
 															</option>
 															<% } %>

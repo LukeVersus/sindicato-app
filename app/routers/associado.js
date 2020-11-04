@@ -137,6 +137,7 @@ module.exports = async function (app) {
                         nome: body.data.content[i].nome,
                         cpf: body.data.content[i].cpf,
                         status: body.data.content[i].status,
+                        anexo: body.data.content[i].anexo_documento,
                         nivel: body.data.content[i].nivel,
                         area: body.data.content[i].area
                     };

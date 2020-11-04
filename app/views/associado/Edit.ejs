@@ -99,7 +99,7 @@
 													</div>
 												</div>
 											</div>
-											<%if(NivelUser == 'ADMIN') {%>																		
+											<% if(NivelUser == 'ADMIN') { %>																		
 												<div class="col-sm-4" style="margin-top: -19px;">
 													<div class="input-group">
 														<div class="form-line">
@@ -177,7 +177,7 @@
 											<div class="col-sm-4">
 												<div class="input-group">
 													<div class="form-line">
-														Data de nascimento: * <% console.log(datanascimento) %>
+														Data de nascimento: * 
 														<input type="date" class="form-control" id="datanascimento"
 															name="datanascimento" value="<%= datanascimento %>" required>
 													</div>
@@ -273,7 +273,7 @@
 																name="municipio">
 																<% for (var i = 0; i < itensEstados.length; i++) { %>
 																<% if (itensEstados[i].id != null ) { %>
-																	<option id="estadoid" value="<%- itensEstados[i].id %>" <%= municipio == '<%- itensEstados[i].id %>' ? 'selected' : '' %>>
+																	<option id="estadoid" value="<%- itensEstados[i].id %>" <%= municipio == '<%= itensEstados[i].id %>' ? 'selected' : '' %>>
 																	<%- itensEstados[i].nome %>
 																</option>
 																<% } %>
@@ -295,7 +295,7 @@
 															name="municipio_lotacao">
 															<% for (var i = 0; i < itensEstados.length; i++) { %>
 															<% if (itensEstados[i].id != null ) { %>
-															<option id="estadoid" value="<%- itensEstados[i].id %>" <%= municipio_lotacao == '<%- itensEstados[i].id %>' ? 'selected' : '' %>>
+															<option id="estadoid" value="<%- itensEstados[i].id %>" <%= municipio_lotacao == '<%= itensEstados[i].id %>' ? 'selected' : '' %>>
 																<%- itensEstados[i].nome %>
 															</option>
 															<% } %>

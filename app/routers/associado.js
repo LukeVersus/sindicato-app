@@ -79,7 +79,7 @@ module.exports = async function (app) {
         } else {           
             var url;
             if (req.body.busca) {
-                url = process.env.API_HOST + rota + "/cpf/" + req.body.busca + '/' + req.body.page + "/" + req.body.size;
+                url = process.env.API_HOST + rota  + '/' + req.body.page +  "/cpf/" + req.body.busca + "/" + req.body.size;
             } else {
                 url = process.env.API_HOST + rota + "/" + req.body.page + "/" + req.body.size + "?sort=nome!asc";
             }

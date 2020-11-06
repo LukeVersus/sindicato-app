@@ -1,8 +1,8 @@
 <!-- Sidebar -->
 
-<% if (NivelUser != "ADMIN") { %>
+<% if (informacoes.NivelUser != "ADMIN") { %>
     <%- include menu-filial.ejs %>
-<% } else if (NivelUser == "ADMIN") { %>
+<% } else if (informacoes.NivelUser == "ADMIN") { %>
 
 
 <section>
@@ -11,8 +11,8 @@
 		<!-- User Info -->
 		<div class="user-info" style="background: #4488bd no-repeat no-repeat;">                
 			<div class="info-container">
-				<div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= NomeUser %></div>
-				<div class="email"><%= EmailUser %></div>
+				<div class="name" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><%= informacoes.NomeUser %></div>
+				<div class="email"><%= informacoes.EmailUser %></div>
 				<div class="btn-group user-helper-dropdown">
 					<i class="material-icons" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">keyboard_arrow_down</i>
 					<ul class="dropdown-menu pull-right">

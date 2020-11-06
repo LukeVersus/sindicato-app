@@ -247,6 +247,46 @@ module.exports = async function (app) {
             doc = buf.toString('base64');
         }
 
+        json = {
+            "anexo_documento": doc,
+            "nome_escola": req.body.nome_escola,
+            "nome": req.body.nome,
+            "orgao_expedidor": req.body.orgao_expedidor,
+            "nivel": req.body.nivel,
+            "atividade_funcional": req.body.atividade_funcional,
+            "matricula": req.body.matricula,
+            "rg": req.body.rg,
+            "cpf": req.body.cpf,
+            "sexo": req.body.sexo,
+            "turno": req.body.turno,
+            "endereco": {
+                "logradouro": req.body.logradouro,
+                "numero": req.body.numero,
+                "complemento": req.body.complemento,
+                "bairro": req.body.bairro,
+                "cep": req.body.cep,
+                "tel_res": req.body.tel_res,
+                "tel_cel": req.body.tel_cel,
+                "municipio": {
+                    "id": req.body.municipio
+                }
+            },
+            "disciplina": req.body.disciplina,
+            "tpEstadoCivil": req.body.tpEstadoCivil,
+            "tpRedeEnsino": req.body.tpRedeEnsino,
+            "situacao": req.body.situacao,
+            "status": "PRE_CADASTRADO",
+            "validacao": false,
+            "datanascimento": datanasc,
+            "tpEscolaridade": req.body.tpEscolaridade,
+            "faixaSalario": req.body.faixaSalario,
+            "celular": req.body.celular,
+            "municipio_lotacao": {
+                "id": req.body.municipio_lotacao
+            }
+        };
+        console.log(json);
+
                
         let cpfTratado = req.body.cpf;
         cpfTratado = S(cpfTratado).replace('.', '').s;
@@ -295,7 +335,9 @@ module.exports = async function (app) {
                 "tpEscolaridade": req.body.tpEscolaridade,
                 "faixaSalario": req.body.faixaSalario,
                 "celular": req.body.celular,
-                "municipio_lotacao": req.body.municipio_lotacao
+                "municipio_lotacao": {
+                "id": req.body.municipio_lotacao
+            }
             },
 
         }, function (error, response, body) {
@@ -390,7 +432,7 @@ module.exports = async function (app) {
                                     */
                                 },
                                 municipio: body.data.endereco.municipio.id,
-                                municipio_lotacao: body.data.municipio_lotacao,
+                                municipio_lotacao: body.data.municipio_lotacao.id,
                                 usuario: body.data.usuario != null ? body.data.usuario.id : null,
                                 disciplina: body.data.disciplina,
                                 tpEstadoCivil: body.data.tpEstadoCivil,
@@ -479,7 +521,8 @@ module.exports = async function (app) {
                 "tpEscolaridade": req.body.tpEscolaridade,
                 "faixaSalario": req.body.faixaSalario,
                 "celular": req.body.celular,
-                "municipio_lotacao": { "id": req.body.municipio_lotacao
+                "municipio_lotacao": {
+                    "id": req.body.municipio_lotacao
                 }
             },
 

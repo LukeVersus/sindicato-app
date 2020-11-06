@@ -242,7 +242,7 @@
 													<% for (var i = 0; i < itensMunicipios.length; i++) { %>
 													<% if (itensMunicipios[i].id != null ) { %>
 													<option id="municipio" name="municipio" value="<%- itensMunicipios[i].id %>">
-														<%- itensMunicipios[i].nome %>
+														<%= itensMunicipios[i].nome %>
 													</option>
 													<% } %>
 													<% } %>
@@ -278,7 +278,7 @@
 													<% for (var i = 0; i < itensMunicipios.length; i++) { %>
 													<% if (itensMunicipios[i].id != null ) { %>
 													<option id="municipio_lotacao" name="municipio_lotacao" value="<%- itensMunicipios[i].id %>">
-														<%- itensMunicipios[i].nome %>
+														<%= itensMunicipios[i].nome %>
 													</option>
 													<% } %>
 													<% } %>

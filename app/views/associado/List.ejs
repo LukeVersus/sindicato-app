@@ -127,6 +127,7 @@
 							</div>
 							<div class="body">
 								<div class="row clearfix">
+									<!--
 									<div class="col-sm-3" style="height: 39px;">
 										<div class="input-group" style="align-items: center; display: flex;">
 											Visualizar 
@@ -145,10 +146,11 @@
 										<div class="input-group" style="display: inline-flex; align-items: center;">
 											Pesquisar:
 											<div style="margin-left: 8px;" class="form-line">
-												<input type="text" class="form-control" id="busca" onchange="buscaCandidato(this.value);">
+												<input type="text" class="form-control" id="busca" onchange="DataTable(this.value);">
 											</div>
 										</div>
 									</div>
+									-->
 								</div>	
 								<div class="table-responsive">
 									<table id="dataTable"
@@ -197,6 +199,7 @@
                                             <% } %>
                                         </tbody>
 									</table>
+									<!--
 									<div class="align-right">
 										<nav>
 											<ul class="pagination" style="display: inline-flex;">
@@ -213,7 +216,8 @@
 												</li>
 											</ul>
 										</nav>
-									</div>										
+									</div>
+									-->										
 								</div>
 							</div>
 
@@ -293,8 +297,9 @@
 	<script src="/vendor/datatables/jquery.dataTables.min.js"></script>
 	<script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-	<!-- Page level custom scripts 
-	<script src="/js/demo/datatables-demo.js"></script> -->
+	<!-- Page level custom scripts  -->
+	<script src="/js/demo/datatables-demo.js"></script> 
+	<!--
 	<script>
 		$('#page-posterior').click(function () {
 			document.getElementById("overlay").style.display = "block";
@@ -332,6 +337,7 @@
 		});
 
 	</script>
+	-->
 
 
 	<!-- Jquery Mask Js -->

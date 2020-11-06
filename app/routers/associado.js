@@ -295,7 +295,8 @@ module.exports = async function (app) {
                 "tpEscolaridade": req.body.tpEscolaridade,
                 "faixaSalario": req.body.faixaSalario,
                 "celular": req.body.celular,
-                "municipio_lotacao": req.body.municipio_lotacao
+                "municipio_lotacao": { "id": req.body.municipio_lotacao
+                }
             },
 
         }, function (error, response, body) {
@@ -651,7 +652,8 @@ module.exports = async function (app) {
                 "tpEscolaridade": req.body.tpEscolaridade,
                 "faixaSalario": req.body.faixaSalario,
                 "celular": req.body.celular,
-                "municipio_lotacao": req.body.municipio_lotacao
+                "municipio_lotacao": { "id": req.body.municipio_lotacao
+                }
             },
 
         }, function (error, response, body) {

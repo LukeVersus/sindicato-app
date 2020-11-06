@@ -37,7 +37,7 @@ module.exports = async function (app) {
         } else {
             if (!req.session.token) {
                 res.redirect('/app/login');
-            } else if (NivelUser != 'ADMIN') {
+            } else if (req.session.json.NivelUser != 'ADMIN') {
                 res.redirect('/');
             } else {    
                 request({
@@ -164,7 +164,7 @@ module.exports = async function (app) {
                         });
                     }
                 });
-                nivel = NivelUser
+                nivel = req.session.json.NivelUser
                 username = body.data.username;
                 imagem = body.data.imgCapa;
             });
@@ -291,7 +291,7 @@ module.exports = async function (app) {
                 "id": req.body.id,
                 "nome": req.body.nome,
                 "username": username,
-                "niveis": NivelUser,
+                "niveis": nivel,
                 "telefone": req.body.telefone,
                 "email": req.body.email,
                 /*

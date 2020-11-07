@@ -128,7 +128,7 @@
 							</div>
 
 							<div class="body">
-								<div class="row clearfix">									
+								<!-- <div class="row clearfix">									
 									<div class="col-sm-3" style="height: 39px;">
 										<div class="input-group" style="align-items: center; display: flex;">
 											Visualizar 
@@ -148,11 +148,11 @@
 										<div class="input-group" style="display: inline-flex; align-items: center;">
 											Pesquisar:
 											<div style="margin-left: 8px;" class="form-line">
-												<input style="margin-left: 8px;" type="text" class="form-control" id="busca" onchange="DataTable();">
+												<input style="margin-left: 8px;" type="text" class="form-control" id="busca" onchange="buscaCandidato(this.value);">
 											</div>
 										</div>
 									</div>									
-								</div>
+								</div> -->
 								<div class="table-responsive">
 									<table id="dataTable"
 										class="table table-bordered table-striped table-hover js-basic-example dataTable">
@@ -192,7 +192,7 @@
 											<% } %>
 										</tbody>
 									</table>									
-									<div class="align-right">
+									<!-- <div class="align-right">
 										<nav>
 											<ul class="pagination" style="display: inline-flex;">
 												<li id="page-anterior" data-page="0" class="page-item disabled">
@@ -208,7 +208,7 @@
 												</li>
 											</ul>
 										</nav>
-									</div>																	
+									</div> -->																	
 								</div>
 							</div>
 
@@ -286,9 +286,9 @@
 	<script src="/vendor/datatables/jquery.dataTables.min.js"></script>
 	<script src="/vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
-	<!-- Page level custom scripts 
-	<script src="/js/demo/datatables-demo.js"></script> -->
-	
+	<!-- Page level custom scripts -->
+	<script src="/js/demo/datatables-demo.js"></script> 
+	<!--
 	<script>
 		$('#page-posterior').click(function () {
 			document.getElementById("overlay").style.display = "block";
@@ -326,7 +326,7 @@
 		});
 
 	</script>
-	
+	-->
 	<!-- Jquery Mask Js -->
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.mask/1.14.11/jquery.mask.min.js"></script>
 
